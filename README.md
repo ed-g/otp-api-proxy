@@ -4,7 +4,7 @@ OpenTripPlanner REST API proxy, which adds more useful information
 
 ## Usage
 
-echo 4100 > .repl-port; lein ring server-headless 4000
+echo 4100 > target/repl-port; lein ring server-headless 4000
 
 Server will be available on localhost:4000
 
