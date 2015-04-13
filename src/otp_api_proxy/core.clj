@@ -10,6 +10,7 @@
             [cheshire.generate :as cheshire-generate]
             [clj-http.client :as http-client]
             [otp-api-proxy.test-data :as test-data]
+            [clojure.walk :as walk]
             ))
 
 (defonce hack-hack-hack
@@ -46,6 +47,7 @@
 
 (defn otp-response->itinerary [r]
   (get-in r [:body :plan]))
+
 
 (defn otp-response->remove-trace [r]
   (-> r
@@ -171,6 +173,32 @@
                                       ])))]
     (http-client/get test-otp-url {:as :json})))
 
+
+;; Fixme: verify agency-id along with stop code
+(defn itinernary->add-text2go
+  "add text2go codes into the stopCode field of an OTP Itinerary"
+  [itin]
+  (let [add-code (fn [i path]
+                   (assoc-in i
+                             (concat path [:stopCode])
+                             (anaheim-stop-text2go 
+                               (get-in i (concat path [:stopId :id])))))
+        walk-add-code (fn [i]
+                        (clojure.walk/postwalk
+                          (fn [x]
+                            (if (:stopId x)
+                              (assoc x
+                                     :stopCode
+                                     (anaheim-stop-text2go
+                                       (get-in x [:stopId :id])))
+                              x))
+                          i))]
+    (-> itin
+        (add-code [:from]) 
+        (add-code [:to])
+        (walk-add-code)
+        )))
+
 (defresource ws-echo [echo]
   :last-modified  #inst "2015-04-09"
   :available-media-types ["application/json" "text/plain"]
@@ -183,6 +211,15 @@
   :handle-ok (pretty-json 
                (-> (simple-otp-request-cached)
                    otp-response->itinerary)))
+
+(defresource ws-otp-cooked []
+  :last-modified  #inst "2015-04-09"
+  :available-media-types ["application/json" "text/plain"]
+  :handle-ok (pretty-json 
+               (-> (simple-otp-request-cached)
+                   otp-response->itinerary
+                   itinernary->add-text2go
+                   )))
 
 (defresource ws-otp-pass-through [otp-instance route-params params request]
   :last-modified  #inst "2015-04-09"
@@ -208,7 +245,9 @@
   (context "/trip-planner/:otp-instance" [otp-instance]
     ;; (ANY "/pass-through" {route-params :route-params params :params}
      (ANY "/plan" []
-       (ws-otp-example ))
+       (ws-otp-example))
+     (ANY "/plan-cooked" []
+       (ws-otp-cooked))
      (ANY "/pass-through" request
        (ws-otp-pass-through otp-instance
                             (:route-params request)

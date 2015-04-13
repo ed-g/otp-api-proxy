@@ -5,10 +5,8 @@
  :status 200,
  :headers
  {"Transfer-Encoding" "chunked",
-  "Via"
-  "1.1\n                                                                          anaheim-otp.ed-groth.com",
-  "Date"
-  "Fri,\n                                                                         10 Apr\n                                                                         2015\n                                                                         20:52:39\n                                                                         GMT",
+  "Via" "1.1 anaheim-otp.ed-groth.com", 
+  "Date" "Fri,10 Apr 2015 20:52:39 GMT",
   "Content-Type" "application/json",
   "Connection" "close"},
  :body
