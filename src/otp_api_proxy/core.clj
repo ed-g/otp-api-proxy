@@ -154,6 +154,9 @@
       (first (filter #(= (:stop_id %) stop-id) stops )))))
 
 
+(defn simple-otp-request-cached []
+  test-data/otp-response-1)
+
 (defn simple-otp-request-live []
   (let [test-otp-url 
         (str "http://anaheim-otp.ed-groth.com/otp/routers/default/plan"
@@ -205,8 +208,6 @@
   (clojure.string/replace service-date #"^(....)(..)(..)$" "$1-$2-$3"))
 
   
-
-;; capture current day in a closure
 (defn itinernary->add-route-span
   "add routeSpan (service span) for each route in otp itinerary"
   [itin]
@@ -227,17 +228,16 @@
   :handle-ok (pretty-json { :message "hello, world" :echo echo }))
 
 (defresource ws-otp-example []
-  :last-modified  #inst "2015-04-09"
   :available-media-types ["application/json" "text/plain"]
   :handle-ok (pretty-json 
                (-> (simple-otp-request-cached)
                    otp-response->itinerary)))
 
 (defresource ws-otp-cooked []
-  :last-modified  #inst "2015-04-09"
   :available-media-types ["application/json" "text/plain"]
   :handle-ok (pretty-json 
                (-> (simple-otp-request-cached)
+               ;; (-> (simple-otp-request-live)
                    otp-response->itinerary
                    itinernary->add-text2go
                    itinernary->add-route-url

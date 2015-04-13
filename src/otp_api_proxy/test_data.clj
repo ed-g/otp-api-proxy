@@ -1,3 +1,5 @@
+(def
+  otp-response-1
 {:orig-content-encoding nil,
  :trace-redirects
  ["http://anaheim-otp.ed-groth.com/otp/routers/default/plan?fromPlace=33.8046480634388,-117.915358543396&toPlace=33.77272636987434,-117.8671646118164&time=1:29pm&date=03-31-2015&mode=TRANSIT,WALK&maxWalkDistance=750&walkReluctance=40&walkSpeed=0.3&arriveBy=false&showIntermediateStops=false"],
@@ -639,4 +641,5 @@
    :totalTime 872,
    :pathCalculationTime 868,
    :renderingTime 4,
-   :timedOut false}}}
+   :timedOut false}}})
+
