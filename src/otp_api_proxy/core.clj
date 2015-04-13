@@ -8,8 +8,8 @@
             [clojure.data.json :as json]
             [cheshire.core :as cheshire]
             [cheshire.generate :as cheshire-generate]
-
             [clj-http.client :as http-client]
+            [otp-api-proxy.test-data :as test-data]
             ))
 
 (defonce hack-hack-hack
@@ -38,6 +38,36 @@
                             ]}
                ))
 
+(defn otp-response->itinerary [r]
+  (get-in r [:body :plan]))
+
+(defn otp-response->remove-trace [r]
+  (-> r
+      (dissoc :orig-content-encoding)
+      (dissoc :trace-redirects)))
+
+
+(defn simple-otp-request-cached []
+  otp-api-proxy.test-data/cached-otp-response-1)
+
+(defn simple-otp-request-live []
+  (let [test-otp-url 
+        (str "http://anaheim-otp.ed-groth.com/otp/routers/default/plan"
+             "?"
+             (reduce str (interpose "&" 
+                                    [ "fromPlace=33.8046480634388,-117.915358543396"
+                                      "toPlace=33.77272636987434,-117.8671646118164"
+                                      "time=1:29pm&date=03-31-2015"
+                                      "mode=TRANSIT,WALK"
+                                      "maxWalkDistance=750"
+                                      "walkReluctance=40"
+                                      "walkSpeed=0.3"
+                                      "arriveBy=false"
+                                      "showIntermediateStops=false"
+                                      ;;"_=1428612154915"
+                                      ])))]
+    (http-client/get test-otp-url {:as :json})))
+
 (defresource ws-echo [echo]
   :last-modified  #inst "2015-04-09"
   :available-media-types ["application/json" "text/plain"]
@@ -47,7 +77,9 @@
 (defresource ws-otp-example []
   :last-modified  #inst "2015-04-09"
   :available-media-types ["application/json" "text/plain"]
-  :handle-ok (pretty-json (simple-otp-request)))
+  :handle-ok (pretty-json 
+               (-> (simple-otp-request-cached)
+                   (otp-response->itinerary))))
 
 (defresource ws-otp-pass-through [otp-instance route-params params request]
   :last-modified  #inst "2015-04-09"
@@ -69,12 +101,12 @@
 (defroutes app
   (ANY "/" []
        (ws-help))
-  (ANY "/otp-example" []
-       (ws-otp-example ))
   ;; (ANY "/otp-params/:otp-instance" {params :params}
   (context "/trip-planner/:otp-instance" [otp-instance]
     ;; (ANY "/pass-through" {route-params :route-params params :params}
-    (ANY "/pass-through" request
+     (ANY "/plan" []
+       (ws-otp-example ))
+     (ANY "/pass-through" request
        (ws-otp-pass-through otp-instance
                             (:route-params request)
                             (:params request)
@@ -100,7 +132,4 @@
   (http-client/get "http://localhost:4000/" {:as :json})
   )
 
-(defn simple-otp-request []
-  (let [test-otp-url "http://anaheim-otp.ed-groth.com/otp/routers/default/plan?fromPlace=33.8046480634388,-117.915358543396&toPlace=33.77272636987434,-117.8671646118164&time=1:29pm&date=03-31-2015&mode=TRANSIT,WALK&maxWalkDistance=750&walkReluctance=40&walkSpeed=0.3&arriveBy=false&showIntermediateStops=false&_=1428612154915"]
-    (http-client/get test-otp-url {:as :json})))
 
