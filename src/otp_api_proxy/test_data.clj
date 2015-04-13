@@ -1,3 +1,5 @@
+(ns otp-api-proxy.test-data)
+
 (def
   otp-response-1
 {:orig-content-encoding nil,
