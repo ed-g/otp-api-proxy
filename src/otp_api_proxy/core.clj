@@ -33,6 +33,12 @@
                  :services [ 
                              { :name "Echo service" 
                                :url "/hello-world/echo" } 
+                             { :name "OTP Server Proxy Test" 
+                               :url "/trip-planner/anaheim-ca-us/plan" } 
+                              { :name "OTP Server Proxy Test" 
+                               :url "/trip-planner/anaheim-ca-us/pass-through" } 
+                             { :name "OTP Params Test" 
+                               :url "/otp-params" } 
                              { :name "OTP Example" 
                                :url "/otp-example" } 
                             ]}
@@ -47,8 +53,105 @@
       (dissoc :trace-redirects)))
 
 
-(defn simple-otp-request-cached []
-  otp-api-proxy.test-data/cached-otp-response-1)
+(comment "http://archive.oregon-gtfs.com/gtfs-api/route-span/day-in-la/2015-4-13/by-feed/anaheim-ca-us/route-id/1704")
+
+(comment "http://gtfs-api.ed-groth.com/gtfs-api/stops/by-feed/anaheim-ca-us")
+
+(comment "http://gtfs-api.ed-groth.com/gtfs-api/routes/by-feed/anaheim-ca-us")
+
+
+(defn gtfs-api-stops-request []
+  (let [test-api-url 
+        (str "http://gtfs-api.ed-groth.com/gtfs-api/"
+             (reduce str (interpose "/" 
+                                    [ "stops"
+                                      "by-feed/anaheim-ca-us"
+                                      ])))]
+    (:body
+      (http-client/get test-api-url {:as :json}))))
+
+(comment 
+  (let [rs (simple-gtfs-api-routes-request)]
+    (clojure.pprint/pprint (map :route_url (:body rs)))))
+
+(defn gtfs-api-routes-request []
+  (let [test-api-url 
+        (str "http://gtfs-api.ed-groth.com/gtfs-api/"
+             (reduce str (interpose "/" 
+                                    [ "routes"
+                                      "by-feed/anaheim-ca-us"
+                                      ])))]
+    (:body
+      (http-client/get test-api-url {:as :json}))))
+
+
+;; It would be really handy if we could retrieve the time zone from the API.
+(defn clean-route-span [route-span]
+  (let [remove-debug-info
+        (fn [early-or-late]
+          (-> early-or-late
+              (dissoc :departure_time_la)
+              (dissoc :service_time_range)))]
+  { :early (remove-debug-info (:early route-span)) 
+    :late  (remove-debug-info (:late  route-span)) }))
+
+;; "http://gtfs-api.ed-groth.com/gtfs-api/route-span/day-in-la/2015-4-13/by-feed/anaheim-ca-us/route-id/1700"
+(defn gtfs-api-routes-span-request
+  "route-id should be a text gtfs route_id. day-in-la is formatted YYYY-MM-DD."
+  [route-id day-in-la]
+  (let [test-api-url 
+        (str "http://gtfs-api.ed-groth.com/gtfs-api/route-span/"
+             (reduce str (interpose "/" 
+                                    [ "day-in-la" day-in-la
+                                      "by-feed/anaheim-ca-us"
+                                      "route-id" route-id
+                                      ])))]
+    (-> (:body
+          (http-client/get test-api-url {:as :json}))
+        clean-route-span)))
+
+(defn demo-gtfs-api-routes-span-request []
+  (gtfs-api-routes-span-request "1702" "2015-04-13"))
+
+
+;; Clearly *anaheim-routes / *anaheim-stops is a huge hack. 
+;; We should instead maintain a data cache with expiration, based on the HTTP
+;; Expiration headers from the REST server.  Is there a clojure library which
+;; provides this at the HTTP level?  Also, we should retry if the first request
+;; fails or times out, and fall over to other servers. This all points at an
+;; HTTP client library.
+;;
+(do 
+  (defonce *anaheim-routes (atom nil))
+  (defn load-anaheim-routes!! [] 
+    (when-not @*anaheim-routes
+      (reset! *anaheim-routes 
+              (gtfs-api-routes-request)))
+    @*anaheim-routes))
+
+(do
+  (defonce *anaheim-stops (atom nil))
+  (defn load-anaheim-stops!! []
+    (when-not @*anaheim-stops
+      (reset! *anaheim-stops 
+              (gtfs-api-stops-request)))
+    @*anaheim-stops))
+
+(defn anaheim-route-url [route-id]
+  (let [routes (load-anaheim-routes!!)]
+    (:route_url
+      (first (filter #(= (:route_id %) route-id) routes )))))
+
+(defn anaheim-route-span [route-id day-in-la]
+  (let [routes (load-anaheim-routes!!)]
+    (:route_url
+      (first (filter #(= (:route_id %) route-id) routes )))))
+
+(defn anaheim-stop-text2go [stop-id]
+  (let [stops (load-anaheim-stops!!)]
+    (:stop_code
+      (first (filter #(= (:stop_id %) stop-id) stops )))))
+
 
 (defn simple-otp-request-live []
   (let [test-otp-url 
@@ -79,7 +182,7 @@
   :available-media-types ["application/json" "text/plain"]
   :handle-ok (pretty-json 
                (-> (simple-otp-request-cached)
-                   (otp-response->itinerary))))
+                   otp-response->itinerary)))
 
 (defresource ws-otp-pass-through [otp-instance route-params params request]
   :last-modified  #inst "2015-04-09"
