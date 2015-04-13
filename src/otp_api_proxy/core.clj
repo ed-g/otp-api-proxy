@@ -145,9 +145,8 @@
       (first (filter #(= (:route_id %) route-id) routes )))))
 
 (defn anaheim-route-span [route-id day-in-la]
-  (let [routes (load-anaheim-routes!!)]
-    (:route_url
-      (first (filter #(= (:route_id %) route-id) routes )))))
+  ;; should we do any caching here??
+  (gtfs-api-routes-span-request route-id day-in-la))
 
 (defn anaheim-stop-text2go [stop-id]
   (let [stops (load-anaheim-stops!!)]
@@ -178,26 +177,48 @@
 (defn itinernary->add-text2go
   "add text2go codes into the stopCode field of an OTP Itinerary"
   [itin]
-  (let [add-code (fn [i path]
-                   (assoc-in i
-                             (concat path [:stopCode])
-                             (anaheim-stop-text2go 
-                               (get-in i (concat path [:stopId :id])))))
-        walk-add-code (fn [i]
-                        (clojure.walk/postwalk
-                          (fn [x]
-                            (if (:stopId x)
-                              (assoc x
-                                     :stopCode
-                                     (anaheim-stop-text2go
-                                       (get-in x [:stopId :id])))
-                              x))
-                          i))]
-    (-> itin
-        (add-code [:from]) 
-        (add-code [:to])
-        (walk-add-code)
-        )))
+  (let [walk-add-code (fn [x]
+                        (if (:stopId x)
+                          (assoc x
+                                 :stopCode
+                                 (anaheim-stop-text2go
+                                   (get-in x [:stopId :id])))
+                          x))]
+    (clojure.walk/postwalk walk-add-code itin)))
+
+(defn itinernary->add-route-url 
+  "add routeUrl (schedule information) for each route in otp itinerary."
+  [itin]
+  (let [walk-add-url (fn [x]
+                       (if (:routeId x)
+                         (assoc x
+                                :routeUrl
+                                (anaheim-route-url
+                                  (get x :routeId)))
+                         x))]
+    (clojure.walk/postwalk walk-add-url itin)))
+
+
+(defn service-date->day-in-la 
+  "convert service date of the form YYYYMMDD to YYYY-MM-DD"
+  [service-date]
+  (clojure.string/replace service-date #"^(....)(..)(..)$" "$1-$2-$3"))
+
+  
+
+;; capture current day in a closure
+(defn itinernary->add-route-span
+  "add routeSpan (service span) for each route in otp itinerary"
+  [itin]
+  (let [walk-add-span (fn [x]
+                       (if (and (:serviceDate x) (:routeId x))
+                         (assoc x
+                                :routeSpan
+                                (anaheim-route-span
+                                  (get x :routeId)
+                                  (service-date->day-in-la (:serviceDate x))))
+                         x))]
+    (clojure.walk/postwalk walk-add-span itin)))
 
 (defresource ws-echo [echo]
   :last-modified  #inst "2015-04-09"
@@ -219,6 +240,8 @@
                (-> (simple-otp-request-cached)
                    otp-response->itinerary
                    itinernary->add-text2go
+                   itinernary->add-route-url
+                   itinernary->add-route-span
                    )))
 
 (defresource ws-otp-pass-through [otp-instance route-params params request]
