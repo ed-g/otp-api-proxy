@@ -1,1 +1,644 @@
-(ns otp-api-proxy.test-data)(def cached-otp-response-1  {:orig-content-encoding nil, :trace-redirects   ["http://anaheim-otp.ed-groth.com/otp/routers/default/plan?fromPlace=33.8046480634388,-117.915358543396&toPlace=33.77272636987434,-117.8671646118164&time=1:29pm&date=03-31-2015&mode=TRANSIT,WALK&maxWalkDistance=750&walkReluctance=40&walkSpeed=0.3&arriveBy=false&showIntermediateStops=false"],   :request-time 1125, :status 200, :headers {"Transfer-Encoding" "chunked",                                              "Connection" "close", "Via" "1.1                                                                          anaheim-otp.ed-groth.com",                                              "Content-Type"                                              "application/json", "Date" "Fri,                                                                         10 Apr                                                                         2015                                                                         20:52:39                                                                         GMT"},   :body {:requestParameters {:arriveBy "false", :date "03-31-2015",                              :walkReluctance "40", :time "1:29pm",                              :showIntermediateStops "false", :mode                              "TRANSIT,WALK", :walkSpeed "0.3",                              :maxWalkDistance "750", :toPlace                              "33.77272636987434,-117.8671646118164",                              :fromPlace "33.8046480634388,-117.915358543396"},          :plan {:date 1427833740000, :from {:departure nil, :arrival nil,                                             :zoneId nil, :stopCode nil, :name                                             "South Harbor Boulevard",                                             :platformCode nil, :orig nil,                                             :stopId nil, :lon                                             -117.91541338573779, :lat                                             33.80464805427682, :stopIndex                                             nil}, :to {:departure nil,                                                        :arrival nil, :zoneId                                                        nil, :stopCode nil,                                                        :name "Memory Lane",                                                        :platformCode nil,                                                        :orig nil, :stopId nil,                                                        :lon                                                        -117.86715235633582,                                                        :lat 33.77275256538152,                                                        :stopIndex nil},                 :itineraries [{:waitingTime 10802, :startTime 1427833740000,                                :endTime 1427848350000, :fare {:fare {:regular                                                                      {:currency                                                                       {:currency                                                                        "USD",                                                                        :currencyCode                                                                        "USD",                                                                        :defaultFractionDigits                                                                        2,                                                                        :symbol                                                                        "$"},                                                                       :cents                                                                       500}}},                                :elevationGained 0.0, :duration 14610.0,                                :walkLimitExceeded false, :tooSloped false,                                :walkTime 2428, :walkDistance                                710.7051355362557, :legs [{:rentedBike false,                                                           :departureDelay 0,                                                           :agencyTimeZoneOffset                                                           -25200000,                                                           :tripShortName nil,                                                           :startTime                                                           1427833740000,                                                           :routeLongName nil,                                                           :alightRule nil,                                                           :endTime                                                           1427834414000,                                                           :steps [{:streetName "South Harbor Boulevard",                                                                    :elevation                                                                    [],                                                                    :relativeDirection                                                                    "DEPART",                                                                    :exit nil,                                                                    :absoluteDirection                                                                    "SOUTH",                                                                    :bogusName                                                                    false,                                                                    :alerts                                                                    nil, :lon                                                                    -117.91541338573779,                                                                    :lat                                                                    33.80464805427682,                                                                    :stayOn                                                                    false,                                                                    :area                                                                    false,                                                                    :distance                                                                    200.81470288460554}],                                                           :mode "WALK",                                                           :tripBlockId nil,                                                           :duration 674.0,                                                           :route "",                                                           :interlineWithPreviousLeg                                                           false, :legGeometry                                                           {:points                                                            "_nimEjjunUdA?|@?l@Aj@?ZA^?\\An@?",                                                            :levels nil,                                                            :length 9},                                                           :agencyName nil,                                                           :realTime false,                                                           :routeColor nil,                                                           :serviceDate nil,                                                           :agencyUrl nil,                                                           :headsign nil, :from                                                           {:departure                                                            1427833740000,                                                            :arrival nil,                                                            :zoneId nil,                                                            :stopCode nil,                                                            :name "South Harbor                                                                  Boulevard",                                                            :platformCode nil,                                                            :orig "", :stopId                                                            nil, :lon                                                            -117.91541338573779,                                                            :lat                                                            33.80464805427682,                                                            :stopIndex nil},                                                           :alerts nil, :notes                                                           nil,                                                           :intermediateStops                                                           nil, :tripId nil,                                                           :agencyId nil,                                                           :routeId nil,                                                           :distance                                                           200.81470288460554,                                                           :transitLeg false,                                                           :headway nil,                                                           :arrivalDelay 0,                                                           :boardRule nil,                                                           :routeTextColor nil,                                                           :isNonExactFrequency                                                           nil, :routeType nil,                                                           :routeShortName nil,                                                           :to {:departure                                                                1427845215000,                                                                :arrival                                                                1427834414000,                                                                :zoneId nil,                                                                :stopCode nil,                                                                :name                                                                "Portofino                                                                Stop",                                                                :platformCode                                                                nil, :orig nil,                                                                :stopId                                                                {:agencyId                                                                 "248", :id                                                                 "778154"},                                                                :lon                                                                -117.91538037734423,                                                                :lat                                                                33.80284241778634,                                                                :stopIndex                                                                nil}}{:rentedBike false, :departureDelay 0, :agencyTimeZoneOffset -25200000, :tripShortName nil, :startTime 1427845215000, :routeLongName "Mainplace Line", :alightRule nil, :endTime 1427846595000, :steps [], :mode "BUS", :tripBlockId nil, :duration 1380.0, :route "19", :interlineWithPreviousLeg false, :legGeometry {:points               "wbimEbjunU??dRM?lJQJAZNPTCNV@v@?nCHJR@F_AKoCGYYSEsKfUS?kV?u^uJHmOBqO@@gM`C@n@Od@a@\\sAJ{G^oArDuDl@|@PQFu@\\a@??FKYi@~FmGHUdR_SAkL?mUBwMCcL?}OHaAn@{EFoB?qK?mP@kOb@cEb@eB|@uBZiCBsNMoAYqBEy@Fi@vP?~OB|@Ph@h@b@d@f@^nAPtBB|MEhIDtLD|N@pG@pKBrOAIvGAtEAnAIn@Qh@q@l@}DtBcAuAd@u@EC[@OBW\\",               :levels nil, :length 90}, :agencyName nil, :realTime false, :routeColor "390FA3", :serviceDate "20150331", :agencyUrl nil, :headsign "Disneyland Resort", :from {:departure 1427845215000, :arrival 1427834414000,                             :zoneId nil, :stopCode nil, :name "Portofino                                                               Stop",                             :platformCode nil, :orig nil, :stopId {:agencyId                                                                    "248", :id                                                                    "778154"},                             :lon -117.91547, :lat 33.80284, :stopIndex 1}, :alerts nil, :notes nil, :intermediateStops nil, :tripId "73448A1314B2783", :agencyId "248", :routeId "1713", :distance 5950.749039460567, :transitLeg true, :headway 10800, :arrivalDelay 0, :boardRule nil, :routeTextColor "ffffff", :isNonExactFrequency true, :routeType 3, :routeShortName "19", :to {:departure 1427846596000, :arrival 1427846595000, :zoneId nil, :stopCode nil,  :name "Main St. & Mainplace Mall", :platformCode nil, :orig nil, :stopId  {:agencyId "248", :id "780771"}, :lon -117.87105, :lat 33.77476, :stopIndex  4}} {:rentedBike false, :departureDelay 0, :agencyTimeZoneOffset -25200000,       :tripShortName nil, :startTime 1427846596000, :routeLongName nil,       :alightRule nil, :endTime 1427848350000, :steps [{:streetName "service road",                                                         :elevation [],                                                         :relativeDirection                                                         "DEPART", :exit nil,                                                         :absoluteDirection                                                         "SOUTHEAST",                                                         :bogusName false,                                                         :alerts nil, :lon                                                         -117.87119620948738,                                                         :lat                                                         33.774644889724115,                                                         :stayOn false, :area                                                         false, :distance                                                         385.0275794476968}                                                        {:streetName "North Main Street",                                                         :elevation [],                                                         :relativeDirection                                                         "RIGHT", :exit nil,                                                         :absoluteDirection                                                         "SOUTH", :bogusName                                                         false, :alerts nil,                                                         :lon                                                         -117.86741230000001,                                                         :lat 33.7737568,                                                         :stayOn false, :area                                                         false, :distance                                                         105.54126024616954}                                                        {:streetName "Memory Lane",                                                         :elevation [],                                                         :relativeDirection                                                         "LEFT", :exit nil,                                                         :absoluteDirection                                                         "EAST", :bogusName                                                         false, :alerts nil,                                                         :lon                                                         -117.86734580000001,                                                         :lat 33.7728151,                                                         :stayOn false, :area                                                         false, :distance                                                         18.891592974870505}],       :mode "WALK", :tripBlockId nil, :duration 1754.0, :route "",       :interlineWithPreviousLeg false, :legGeometry {:points                                                      "orcmE~ulnUFERWT[N_@He@DUFOT[RWRYRYBk@@g@?iC?k@?{EvCAb@KJe@",                                                      :levels nil, :length 20},       :agencyName nil, :realTime false, :routeColor nil, :serviceDate nil,       :agencyUrl nil, :headsign nil, :from {:departure 1427846596000, :arrival                                             1427846595000, :zoneId nil,                                             :stopCode nil, :name "Main St. &                                                                  Mainplace                                                                  Mall",                                             :platformCode nil, :orig nil,                                             :stopId {:agencyId "248", :id                                                      "780771"}, :lon                                             -117.87119620948738, :lat                                             33.774644889724115, :stopIndex                                             nil}, :alerts nil, :notes nil,       :intermediateStops nil, :tripId nil, :agencyId nil, :routeId nil,       :distance 509.4604326687368, :transitLeg false, :headway nil,       :arrivalDelay 0, :boardRule nil, :routeTextColor nil,       :isNonExactFrequency nil, :routeType nil, :routeShortName nil, :to       {:departure nil, :arrival 1427848350000, :zoneId nil, :stopCode nil,        :name "Memory Lane", :platformCode nil, :orig "", :stopId nil, :lon        -117.86715235633582, :lat 33.77275256538152, :stopIndex nil}}],:transfers 0, :transitTime 1380, :elevationLost 0.0} {:waitingTime 0,                                                      :startTime 1427833740000,                                                      :endTime 1427857800000,                                                      :fare nil,                                                      :elevationGained 0.0,                                                      :duration 24060.0,                                                      :walkLimitExceeded true,                                                      :tooSloped false,                                                      :walkTime 24060,                                                      :walkDistance                                                      7128.643068525066, :legs                                                      [{:rentedBike false,                                                        :departureDelay 0,                                                        :agencyTimeZoneOffset                                                        -25200000,                                                        :tripShortName nil,                                                        :startTime                                                        1427833740000,                                                        :routeLongName nil,                                                        :alightRule nil,                                                        :endTime 1427857800000,                                                        :steps [{:streetName "South Harbor Boulevard",                                                                 :elevation [],                                                                 :relativeDirection                                                                 "DEPART",                                                                 :exit nil,                                                                 :absoluteDirection                                                                 "SOUTH",                                                                 :bogusName                                                                 false, :alerts                                                                 nil, :lon                                                                 -117.91541338573779,                                                                 :lat                                                                 33.80464805427682,                                                                 :stayOn false,                                                                 :area false,                                                                 :distance                                                                 124.15090711937937}                                                                {:streetName "path",                                                                 :elevation [],                                                                 :relativeDirection                                                                 "LEFT", :exit                                                                 nil,                                                                 :absoluteDirection                                                                 "EAST",                                                                 :bogusName                                                                 true, :alerts                                                                 nil, :lon                                                                 -117.9154034,                                                                 :lat                                                                 33.8035316,                                                                 :stayOn false,                                                                 :area false,                                                                 :distance                                                                 47.49975374313189}                                                                {:streetName                                                                 "West Katella Avenue",                                                                 :elevation [],                                                                 :relativeDirection                                                                 "LEFT", :exit                                                                 nil,                                                                 :absoluteDirection                                                                 "EAST",                                                                 :bogusName                                                                 false, :alerts                                                                 nil, :lon                                                                 -117.91503220000001,                                                                 :lat                                                                 33.8033986,                                                                 :stayOn false,                                                                 :area false,                                                                 :distance                                                                 767.5336616318095}                                                                {:streetName                                                                 "Katella Avenue",                                                                 :elevation [],                                                                 :relativeDirection                                                                 "CONTINUE",                                                                 :exit nil,                                                                 :absoluteDirection                                                                 "EAST",                                                                 :bogusName                                                                 false, :alerts                                                                 nil, :lon                                                                 -117.90672540000001,                                                                 :lat                                                                 33.8034132,                                                                 :stayOn false,                                                                 :area false,                                                                 :distance                                                                 18.890335608480278}                                                                {:streetName                                                                 "East Katella Avenue",                                                                 :elevation [],                                                                 :relativeDirection                                                                 "CONTINUE",                                                                 :exit nil,                                                                 :absoluteDirection                                                                 "EAST",                                                                 :bogusName                                                                 false, :alerts                                                                 nil, :lon                                                                 -117.90652100000001,                                                                 :lat                                                                 33.8034096,                                                                 :stayOn false,                                                                 :area false,                                                                 :distance                                                                 518.4026602557909}                                                                {:streetName                                                                 "Anaheim Way",                                                                 :elevation [],                                                                 :relativeDirection                                                                 "RIGHT", :exit                                                                 nil,                                                                 :absoluteDirection                                                                 "SOUTHEAST",                                                                 :bogusName                                                                 false, :alerts                                                                 nil, :lon                                                                 -117.9009106,                                                                 :lat                                                                 33.803440900000005,                                                                 :stayOn false,                                                                 :area false,                                                                 :distance                                                                 1028.8025851593518}{:streetName "North Anaheim Boulevard", :elevation [], :relativeDirection "CONTINUE", :exit nil, :absoluteDirection "SOUTHEAST", :bogusName false, :alerts nil, :lon -117.89399200000001, :lat 33.796221800000005, :stayOn false, :area false, :distance 575.6594026197595} {:streetName "The City Drive North",                                            :elevation [], :relativeDirection                                            "RIGHT", :exit nil,                                            :absoluteDirection "SOUTH",                                            :bogusName false, :alerts nil, :lon                                            -117.88963550000001, :lat                                            33.792652000000004, :stayOn false,                                            :area false, :distance                                            78.548006566911} {:streetName "The City Drive South",                                                              :elevation [],                                                              :relativeDirection                                                              "CONTINUE", :exit                                                              nil,                                                              :absoluteDirection                                                              "SOUTH",                                                              :bogusName false,                                                              :alerts nil, :lon                                                              -117.88985290000001,                                                              :lat 33.7919691,                                                              :stayOn false,                                                              :area false,                                                              :distance                                                              130.43133025794972}{:streetName "road", :elevation [], :relativeDirection "LEFT", :exit nil, :absoluteDirection "EAST", :bogusName true, :alerts nil, :lon -117.8902333, :lat 33.790839600000005, :stayOn false, :area false, :distance 217.60662799990848} {:streetName "Chapman Avenue", :elevation [],                      :relativeDirection "LEFT", :exit nil, :absoluteDirection                      "EAST", :bogusName false, :alerts nil, :lon                      -117.88856480000001, :lat 33.7895035, :stayOn false,                      :area false, :distance 956.945401568818} {:streetName "West Chapman Avenue",                                                                :elevation [],                                                                :relativeDirection                                                                "CONTINUE",                                                                :exit nil,                                                                :absoluteDirection                                                                "EAST",                                                                :bogusName                                                                false, :alerts                                                                nil, :lon                                                                -117.87872920000001,                                                                :lat                                                                33.7878903,                                                                :stayOn false,                                                                :area false,                                                                :distance                                                                496.0815877922827}{:streetName "South Marks Way", :elevation [], :relativeDirection "RIGHT", :exit nil, :absoluteDirection "SOUTH", :bogusName false, :alerts nil, :lon -117.8733612, :lat 33.7878835, :stayOn false, :area false, :distance 201.64813440100178} {:streetName "West Almond Avenue", :elevation [],                      :relativeDirection "LEFT", :exit nil, :absoluteDirection                      "EAST", :bogusName false, :alerts nil, :lon                      -117.87334310000001, :lat 33.7860701, :stayOn false,                      :area false, :distance 261.0397193260992} {:streetName                                                                 "South Feldner                                                                 Road",                                                                 :elevation [],                                                                 :relativeDirection                                                                 "RIGHT", :exit                                                                 nil,                                                                 :absoluteDirection                                                                 "SOUTH",                                                                 :bogusName                                                                 false, :alerts                                                                 nil, :lon                                                                 -117.8705185,                                                                 :lat                                                                 33.7860669,                                                                 :stayOn false,                                                                 :area false,                                                                 :distance                                                                 228.2731144019491}{:streetName "West Palmyra Avenue", :elevation [], :relativeDirection "LEFT", :exit nil, :absoluteDirection "EAST", :bogusName false, :alerts nil, :lon -117.87052360000001, :lat 33.784014, :stayOn false, :area false, :distance 97.70236420150239} {:streetName "S Bedford Rd", :elevation [],                     :relativeDirection "RIGHT", :exit nil, :absoluteDirection                     "SOUTH", :bogusName false, :alerts nil, :lon                     -117.86946680000001, :lat 33.7840095, :stayOn false, :area                     false, :distance 688.6542061385021} {:streetName "Mainplace Drive",                                                          :elevation [],                                                          :relativeDirection                                                          "LEFT", :exit nil,                                                          :absoluteDirection                                                          "SOUTHEAST",                                                          :bogusName false,                                                          :alerts nil, :lon                                                          -117.86953510000001,                                                          :lat 33.7778219,                                                          :stayOn false, :area                                                          false, :distance                                                          246.9085879874431}{:streetName "North Main Street", :elevation [], :relativeDirection "RIGHT", :exit nil, :absoluteDirection "SOUTH", :bogusName false, :alerts nil, :lon -117.86741380000001, :lat 33.7766078, :stayOn false, :area false, :distance 422.5597555326885} {:streetName "Memory Lane", :elevation [],                     :relativeDirection "LEFT", :exit nil, :absoluteDirection                     "EAST", :bogusName false, :alerts nil, :lon                     -117.86734580000001, :lat 33.7728151, :stayOn false, :area                     false, :distance 18.891592974870505}], :mode "WALK",:tripBlockId nil, :duration 24060.0, :route "", :interlineWithPreviousLegfalse, :legGeometry {:points                     "_nimEjjunUdA?|@?l@Aj@??g@?]DATA?_B?yA?_@Ai@?cA?s@?c@?aA?a@?]?g@?oGAaC?S?qF?}B?}G@g@AsG?qB?sACePAaB`@a@dEsEn@q@nBoBfA_ArAiAJG|E_DXOh@e@`GwFhBoBpAaBrC}C\\]xQsRPUP[JWHYFYH]Dy@RDXFzA\\x@RtA\\pAXJm@Ri@X[nEyECi@Fs@C]AeBBs@RgARgAb@wAz@_BtBeEh@uBBYPcBBeA?_G@u@@o@AgDAyCAiD?O?S@mA?Y?aA?yB?sE?gE?kIhJC@gA?cD?aD?gDrC?^?dF@@_@?sDlJAnJDpA@fG?NAhB?`@H`@mAZ}@FMN_@LWVYj@a@d@]P[J[Dc@@_@zD?jE?pD?vCAb@KJe@",                     :levels nil, :length 129}, :agencyName nil, :realTimefalse, :routeColor nil, :serviceDate nil, :agencyUrl nil, :headsign nil, :from{:departure 1427833740000, :arrival nil, :zoneId nil, :stopCode nil, :name "South Harbor Boulevard", :platformCode nil, :orig "", :stopId nil, :lon -117.91541338573779, :lat 33.80464805427682, :stopIndex nil}, :alerts nil,:notes nil, :intermediateStops nil, :tripId nil, :agencyId nil, :routeId nil,:distance 7126.22973528763, :transitLeg false, :headway nil, :arrivalDelay 0,:boardRule nil, :routeTextColor nil, :isNonExactFrequency nil, :routeType nil,:routeShortName nil, :to {:departure nil, :arrival 1427857800000, :zoneId nil,                          :stopCode nil, :name "Memory Lane", :platformCode                          nil, :orig "", :stopId nil, :lon -117.86715235633582,                          :lat 33.77275256538152, :stopIndex nil}}], :transfers0, :transitTime 0, :elevationLost 0.0}]}, :error nil, :debug{:precalculationTime 0, :pathCalculationTime 868, :pathTimes [10 166], :renderingTime 4, :totalTime 872, :timedOut false}}})
+{:orig-content-encoding nil,
+ :trace-redirects
+ ["http://anaheim-otp.ed-groth.com/otp/routers/default/plan?fromPlace=33.8046480634388,-117.915358543396&toPlace=33.77272636987434,-117.8671646118164&time=1:29pm&date=03-31-2015&mode=TRANSIT,WALK&maxWalkDistance=750&walkReluctance=40&walkSpeed=0.3&arriveBy=false&showIntermediateStops=false"],
+ :request-time 1125,
+ :status 200,
+ :headers
+ {"Transfer-Encoding" "chunked",
+  "Via"
+  "1.1\n                                                                          anaheim-otp.ed-groth.com",
+  "Date"
+  "Fri,\n                                                                         10 Apr\n                                                                         2015\n                                                                         20:52:39\n                                                                         GMT",
+  "Content-Type" "application/json",
+  "Connection" "close"},
+ :body
+ {:requestParameters
+  {:arriveBy "false",
+   :date "03-31-2015",
+   :walkReluctance "40",
+   :time "1:29pm",
+   :showIntermediateStops "false",
+   :mode "TRANSIT,WALK",
+   :walkSpeed "0.3",
+   :maxWalkDistance "750",
+   :toPlace "33.77272636987434,-117.8671646118164",
+   :fromPlace "33.8046480634388,-117.915358543396"},
+  :plan
+  {:date 1427833740000,
+   :from
+   {:departure nil,
+    :arrival nil,
+    :zoneId nil,
+    :stopCode nil,
+    :name "South Harbor Boulevard",
+    :platformCode nil,
+    :orig nil,
+    :stopId nil,
+    :lon -117.91541338573779,
+    :lat 33.80464805427682,
+    :stopIndex nil},
+   :to
+   {:departure nil,
+    :arrival nil,
+    :zoneId nil,
+    :stopCode nil,
+    :name "Memory Lane",
+    :platformCode nil,
+    :orig nil,
+    :stopId nil,
+    :lon -117.86715235633582,
+    :lat 33.77275256538152,
+    :stopIndex nil},
+   :itineraries
+   [{:waitingTime 10802,
+     :startTime 1427833740000,
+     :endTime 1427848350000,
+     :fare
+     {:fare
+      {:regular
+       {:cents 500,
+        :currency
+        {:symbol "$",
+         :currency "USD",
+         :defaultFractionDigits 2,
+         :currencyCode "USD"}}}},
+     :elevationGained 0.0,
+     :duration 14610.0,
+     :walkLimitExceeded false,
+     :tooSloped false,
+     :walkTime 2428,
+     :walkDistance 710.7051355362557,
+     :legs
+     [{:rentedBike false,
+       :departureDelay 0,
+       :agencyTimeZoneOffset -25200000,
+       :tripShortName nil,
+       :startTime 1427833740000,
+       :routeLongName nil,
+       :alightRule nil,
+       :endTime 1427834414000,
+       :steps
+       [{:streetName "South Harbor Boulevard",
+         :elevation [],
+         :relativeDirection "DEPART",
+         :exit nil,
+         :absoluteDirection "SOUTH",
+         :bogusName false,
+         :alerts nil,
+         :lon -117.91541338573779,
+         :lat 33.80464805427682,
+         :stayOn false,
+         :area false,
+         :distance 200.81470288460554}],
+       :mode "WALK",
+       :tripBlockId nil,
+       :duration 674.0,
+       :route "",
+       :interlineWithPreviousLeg false,
+       :legGeometry
+       {:points "_nimEjjunUdA?|@?l@Aj@?ZA^?\\An@?",
+        :levels nil,
+        :length 9},
+       :agencyName nil,
+       :realTime false,
+       :routeColor nil,
+       :serviceDate nil,
+       :agencyUrl nil,
+       :headsign nil,
+       :from
+       {:departure 1427833740000,
+        :arrival nil,
+        :zoneId nil,
+        :stopCode nil,
+        :name
+        "South Harbor\n                                                                  Boulevard",
+        :platformCode nil,
+        :orig "",
+        :stopId nil,
+        :lon -117.91541338573779,
+        :lat 33.80464805427682,
+        :stopIndex nil},
+       :alerts nil,
+       :notes nil,
+       :intermediateStops nil,
+       :tripId nil,
+       :agencyId nil,
+       :routeId nil,
+       :distance 200.81470288460554,
+       :transitLeg false,
+       :headway nil,
+       :arrivalDelay 0,
+       :boardRule nil,
+       :routeTextColor nil,
+       :isNonExactFrequency nil,
+       :routeType nil,
+       :routeShortName nil,
+       :to
+       {:departure 1427845215000,
+        :arrival 1427834414000,
+        :zoneId nil,
+        :stopCode nil,
+        :name
+        "Portofino\n                                                                Stop",
+        :platformCode nil,
+        :orig nil,
+        :stopId {:id "778154", :agencyId "248"},
+        :lon -117.91538037734423,
+        :lat 33.80284241778634,
+        :stopIndex nil}}
+      {:rentedBike false,
+       :departureDelay 0,
+       :agencyTimeZoneOffset -25200000,
+       :tripShortName nil,
+       :startTime 1427845215000,
+       :routeLongName "Mainplace Line",
+       :alightRule nil,
+       :endTime 1427846595000,
+       :steps [],
+       :mode "BUS",
+       :tripBlockId nil,
+       :duration 1380.0,
+       :route "19",
+       :interlineWithPreviousLeg false,
+       :legGeometry
+       {:points
+        "wbimEbjunU??dRM?lJQJAZNPTCNV@v@?nCHJR@F_AKoCGYYSEsKfUS?kV?u^uJHmOBqO@@gM`C@n@Od@a@\\sAJ{G^oArDuDl@|@PQFu@\\a@??FKYi@~FmGHUdR_SAkL?mUBwMCcL?}OHaAn@{EFoB?qK?mP@kOb@cEb@eB|@uBZiCBsNMoAYqBEy@Fi@vP?~OB|@Ph@h@b@d@f@^nAPtBB|MEhIDtLD|N@pG@pKBrOAIvGAtEAnAIn@Qh@q@l@}DtBcAuAd@u@EC[@OBW\\",
+        :levels nil,
+        :length 90},
+       :agencyName nil,
+       :realTime false,
+       :routeColor "390FA3",
+       :serviceDate "20150331",
+       :agencyUrl nil,
+       :headsign "Disneyland Resort",
+       :from
+       {:departure 1427845215000,
+        :arrival 1427834414000,
+        :zoneId nil,
+        :stopCode nil,
+        :name
+        "Portofino\n                                                               Stop",
+        :platformCode nil,
+        :orig nil,
+        :stopId {:id "778154", :agencyId "248"},
+        :lon -117.91547,
+        :lat 33.80284,
+        :stopIndex 1},
+       :alerts nil,
+       :notes nil,
+       :intermediateStops nil,
+       :tripId "73448A1314B2783",
+       :agencyId "248",
+       :routeId "1713",
+       :distance 5950.749039460567,
+       :transitLeg true,
+       :headway 10800,
+       :arrivalDelay 0,
+       :boardRule nil,
+       :routeTextColor "ffffff",
+       :isNonExactFrequency true,
+       :routeType 3,
+       :routeShortName "19",
+       :to
+       {:departure 1427846596000,
+        :arrival 1427846595000,
+        :zoneId nil,
+        :stopCode nil,
+        :name "Main St. & Mainplace Mall",
+        :platformCode nil,
+        :orig nil,
+        :stopId {:id "780771", :agencyId "248"},
+        :lon -117.87105,
+        :lat 33.77476,
+        :stopIndex 4}}
+      {:rentedBike false,
+       :departureDelay 0,
+       :agencyTimeZoneOffset -25200000,
+       :tripShortName nil,
+       :startTime 1427846596000,
+       :routeLongName nil,
+       :alightRule nil,
+       :endTime 1427848350000,
+       :steps
+       [{:streetName "service road",
+         :elevation [],
+         :relativeDirection "DEPART",
+         :exit nil,
+         :absoluteDirection "SOUTHEAST",
+         :bogusName false,
+         :alerts nil,
+         :lon -117.87119620948738,
+         :lat 33.774644889724115,
+         :stayOn false,
+         :area false,
+         :distance 385.0275794476968}
+        {:streetName "North Main Street",
+         :elevation [],
+         :relativeDirection "RIGHT",
+         :exit nil,
+         :absoluteDirection "SOUTH",
+         :bogusName false,
+         :alerts nil,
+         :lon -117.86741230000001,
+         :lat 33.7737568,
+         :stayOn false,
+         :area false,
+         :distance 105.54126024616954}
+        {:streetName "Memory Lane",
+         :elevation [],
+         :relativeDirection "LEFT",
+         :exit nil,
+         :absoluteDirection "EAST",
+         :bogusName false,
+         :alerts nil,
+         :lon -117.86734580000001,
+         :lat 33.7728151,
+         :stayOn false,
+         :area false,
+         :distance 18.891592974870505}],
+       :mode "WALK",
+       :tripBlockId nil,
+       :duration 1754.0,
+       :route "",
+       :interlineWithPreviousLeg false,
+       :legGeometry
+       {:points
+        "orcmE~ulnUFERWT[N_@He@DUFOT[RWRYRYBk@@g@?iC?k@?{EvCAb@KJe@",
+        :levels nil,
+        :length 20},
+       :agencyName nil,
+       :realTime false,
+       :routeColor nil,
+       :serviceDate nil,
+       :agencyUrl nil,
+       :headsign nil,
+       :from
+       {:departure 1427846596000,
+        :arrival 1427846595000,
+        :zoneId nil,
+        :stopCode nil,
+        :name
+        "Main St. &\n                                                                  Mainplace\n                                                                  Mall",
+        :platformCode nil,
+        :orig nil,
+        :stopId {:id "780771", :agencyId "248"},
+        :lon -117.87119620948738,
+        :lat 33.774644889724115,
+        :stopIndex nil},
+       :alerts nil,
+       :notes nil,
+       :intermediateStops nil,
+       :tripId nil,
+       :agencyId nil,
+       :routeId nil,
+       :distance 509.4604326687368,
+       :transitLeg false,
+       :headway nil,
+       :arrivalDelay 0,
+       :boardRule nil,
+       :routeTextColor nil,
+       :isNonExactFrequency nil,
+       :routeType nil,
+       :routeShortName nil,
+       :to
+       {:departure nil,
+        :arrival 1427848350000,
+        :zoneId nil,
+        :stopCode nil,
+        :name "Memory Lane",
+        :platformCode nil,
+        :orig "",
+        :stopId nil,
+        :lon -117.86715235633582,
+        :lat 33.77275256538152,
+        :stopIndex nil}}],
+     :transfers 0,
+     :transitTime 1380,
+     :elevationLost 0.0}
+    {:waitingTime 0,
+     :startTime 1427833740000,
+     :endTime 1427857800000,
+     :fare nil,
+     :elevationGained 0.0,
+     :duration 24060.0,
+     :walkLimitExceeded true,
+     :tooSloped false,
+     :walkTime 24060,
+     :walkDistance 7128.643068525066,
+     :legs
+     [{:rentedBike false,
+       :departureDelay 0,
+       :agencyTimeZoneOffset -25200000,
+       :tripShortName nil,
+       :startTime 1427833740000,
+       :routeLongName nil,
+       :alightRule nil,
+       :endTime 1427857800000,
+       :steps
+       [{:streetName "South Harbor Boulevard",
+         :elevation [],
+         :relativeDirection "DEPART",
+         :exit nil,
+         :absoluteDirection "SOUTH",
+         :bogusName false,
+         :alerts nil,
+         :lon -117.91541338573779,
+         :lat 33.80464805427682,
+         :stayOn false,
+         :area false,
+         :distance 124.15090711937937}
+        {:streetName "path",
+         :elevation [],
+         :relativeDirection "LEFT",
+         :exit nil,
+         :absoluteDirection "EAST",
+         :bogusName true,
+         :alerts nil,
+         :lon -117.9154034,
+         :lat 33.8035316,
+         :stayOn false,
+         :area false,
+         :distance 47.49975374313189}
+        {:streetName "West Katella Avenue",
+         :elevation [],
+         :relativeDirection "LEFT",
+         :exit nil,
+         :absoluteDirection "EAST",
+         :bogusName false,
+         :alerts nil,
+         :lon -117.91503220000001,
+         :lat 33.8033986,
+         :stayOn false,
+         :area false,
+         :distance 767.5336616318095}
+        {:streetName "Katella Avenue",
+         :elevation [],
+         :relativeDirection "CONTINUE",
+         :exit nil,
+         :absoluteDirection "EAST",
+         :bogusName false,
+         :alerts nil,
+         :lon -117.90672540000001,
+         :lat 33.8034132,
+         :stayOn false,
+         :area false,
+         :distance 18.890335608480278}
+        {:streetName "East Katella Avenue",
+         :elevation [],
+         :relativeDirection "CONTINUE",
+         :exit nil,
+         :absoluteDirection "EAST",
+         :bogusName false,
+         :alerts nil,
+         :lon -117.90652100000001,
+         :lat 33.8034096,
+         :stayOn false,
+         :area false,
+         :distance 518.4026602557909}
+        {:streetName "Anaheim Way",
+         :elevation [],
+         :relativeDirection "RIGHT",
+         :exit nil,
+         :absoluteDirection "SOUTHEAST",
+         :bogusName false,
+         :alerts nil,
+         :lon -117.9009106,
+         :lat 33.803440900000005,
+         :stayOn false,
+         :area false,
+         :distance 1028.8025851593518}
+        {:streetName "North Anaheim Boulevard",
+         :elevation [],
+         :relativeDirection "CONTINUE",
+         :exit nil,
+         :absoluteDirection "SOUTHEAST",
+         :bogusName false,
+         :alerts nil,
+         :lon -117.89399200000001,
+         :lat 33.796221800000005,
+         :stayOn false,
+         :area false,
+         :distance 575.6594026197595}
+        {:streetName "The City Drive North",
+         :elevation [],
+         :relativeDirection "RIGHT",
+         :exit nil,
+         :absoluteDirection "SOUTH",
+         :bogusName false,
+         :alerts nil,
+         :lon -117.88963550000001,
+         :lat 33.792652000000004,
+         :stayOn false,
+         :area false,
+         :distance 78.548006566911}
+        {:streetName "The City Drive South",
+         :elevation [],
+         :relativeDirection "CONTINUE",
+         :exit nil,
+         :absoluteDirection "SOUTH",
+         :bogusName false,
+         :alerts nil,
+         :lon -117.88985290000001,
+         :lat 33.7919691,
+         :stayOn false,
+         :area false,
+         :distance 130.43133025794972}
+        {:streetName "road",
+         :elevation [],
+         :relativeDirection "LEFT",
+         :exit nil,
+         :absoluteDirection "EAST",
+         :bogusName true,
+         :alerts nil,
+         :lon -117.8902333,
+         :lat 33.790839600000005,
+         :stayOn false,
+         :area false,
+         :distance 217.60662799990848}
+        {:streetName "Chapman Avenue",
+         :elevation [],
+         :relativeDirection "LEFT",
+         :exit nil,
+         :absoluteDirection "EAST",
+         :bogusName false,
+         :alerts nil,
+         :lon -117.88856480000001,
+         :lat 33.7895035,
+         :stayOn false,
+         :area false,
+         :distance 956.945401568818}
+        {:streetName "West Chapman Avenue",
+         :elevation [],
+         :relativeDirection "CONTINUE",
+         :exit nil,
+         :absoluteDirection "EAST",
+         :bogusName false,
+         :alerts nil,
+         :lon -117.87872920000001,
+         :lat 33.7878903,
+         :stayOn false,
+         :area false,
+         :distance 496.0815877922827}
+        {:streetName "South Marks Way",
+         :elevation [],
+         :relativeDirection "RIGHT",
+         :exit nil,
+         :absoluteDirection "SOUTH",
+         :bogusName false,
+         :alerts nil,
+         :lon -117.8733612,
+         :lat 33.7878835,
+         :stayOn false,
+         :area false,
+         :distance 201.64813440100178}
+        {:streetName "West Almond Avenue",
+         :elevation [],
+         :relativeDirection "LEFT",
+         :exit nil,
+         :absoluteDirection "EAST",
+         :bogusName false,
+         :alerts nil,
+         :lon -117.87334310000001,
+         :lat 33.7860701,
+         :stayOn false,
+         :area false,
+         :distance 261.0397193260992}
+        {:streetName
+         "South Feldner\n                                                                 Road",
+         :elevation [],
+         :relativeDirection "RIGHT",
+         :exit nil,
+         :absoluteDirection "SOUTH",
+         :bogusName false,
+         :alerts nil,
+         :lon -117.8705185,
+         :lat 33.7860669,
+         :stayOn false,
+         :area false,
+         :distance 228.2731144019491}
+        {:streetName "West Palmyra Avenue",
+         :elevation [],
+         :relativeDirection "LEFT",
+         :exit nil,
+         :absoluteDirection "EAST",
+         :bogusName false,
+         :alerts nil,
+         :lon -117.87052360000001,
+         :lat 33.784014,
+         :stayOn false,
+         :area false,
+         :distance 97.70236420150239}
+        {:streetName "S Bedford Rd",
+         :elevation [],
+         :relativeDirection "RIGHT",
+         :exit nil,
+         :absoluteDirection "SOUTH",
+         :bogusName false,
+         :alerts nil,
+         :lon -117.86946680000001,
+         :lat 33.7840095,
+         :stayOn false,
+         :area false,
+         :distance 688.6542061385021}
+        {:streetName "Mainplace Drive",
+         :elevation [],
+         :relativeDirection "LEFT",
+         :exit nil,
+         :absoluteDirection "SOUTHEAST",
+         :bogusName false,
+         :alerts nil,
+         :lon -117.86953510000001,
+         :lat 33.7778219,
+         :stayOn false,
+         :area false,
+         :distance 246.9085879874431}
+        {:streetName "North Main Street",
+         :elevation [],
+         :relativeDirection "RIGHT",
+         :exit nil,
+         :absoluteDirection "SOUTH",
+         :bogusName false,
+         :alerts nil,
+         :lon -117.86741380000001,
+         :lat 33.7766078,
+         :stayOn false,
+         :area false,
+         :distance 422.5597555326885}
+        {:streetName "Memory Lane",
+         :elevation [],
+         :relativeDirection "LEFT",
+         :exit nil,
+         :absoluteDirection "EAST",
+         :bogusName false,
+         :alerts nil,
+         :lon -117.86734580000001,
+         :lat 33.7728151,
+         :stayOn false,
+         :area false,
+         :distance 18.891592974870505}],
+       :mode "WALK",
+       :tripBlockId nil,
+       :duration 24060.0,
+       :route "",
+       :interlineWithPreviousLeg false,
+       :legGeometry
+       {:points
+        "_nimEjjunUdA?|@?l@Aj@??g@?]DATA?_B?yA?_@Ai@?cA?s@?c@?aA?a@?]?g@?oGAaC?S?qF?}B?}G@g@AsG?qB?sACePAaB`@a@dEsEn@q@nBoBfA_ArAiAJG|E_DXOh@e@`GwFhBoBpAaBrC}C\\]xQsRPUP[JWHYFYH]Dy@RDXFzA\\x@RtA\\pAXJm@Ri@X[nEyECi@Fs@C]AeBBs@RgARgAb@wAz@_BtBeEh@uBBYPcBBeA?_G@u@@o@AgDAyCAiD?O?S@mA?Y?aA?yB?sE?gE?kIhJC@gA?cD?aD?gDrC?^?dF@@_@?sDlJAnJDpA@fG?NAhB?`@H`@mAZ}@FMN_@LWVYj@a@d@]P[J[Dc@@_@zD?jE?pD?vCAb@KJe@",
+        :levels nil,
+        :length 129},
+       :agencyName nil,
+       :realTime false,
+       :routeColor nil,
+       :serviceDate nil,
+       :agencyUrl nil,
+       :headsign nil,
+       :from
+       {:departure 1427833740000,
+        :arrival nil,
+        :zoneId nil,
+        :stopCode nil,
+        :name "South Harbor Boulevard",
+        :platformCode nil,
+        :orig "",
+        :stopId nil,
+        :lon -117.91541338573779,
+        :lat 33.80464805427682,
+        :stopIndex nil},
+       :alerts nil,
+       :notes nil,
+       :intermediateStops nil,
+       :tripId nil,
+       :agencyId nil,
+       :routeId nil,
+       :distance 7126.22973528763,
+       :transitLeg false,
+       :headway nil,
+       :arrivalDelay 0,
+       :boardRule nil,
+       :routeTextColor nil,
+       :isNonExactFrequency nil,
+       :routeType nil,
+       :routeShortName nil,
+       :to
+       {:departure nil,
+        :arrival 1427857800000,
+        :zoneId nil,
+        :stopCode nil,
+        :name "Memory Lane",
+        :platformCode nil,
+        :orig "",
+        :stopId nil,
+        :lon -117.86715235633582,
+        :lat 33.77275256538152,
+        :stopIndex nil}}],
+     :transfers 0,
+     :transitTime 0,
+     :elevationLost 0.0}]},
+  :error nil,
+  :debug
+  {:pathTimes [10 166],
+   :precalculationTime 0,
+   :totalTime 872,
+   :pathCalculationTime 868,
+   :renderingTime 4,
+   :timedOut false}}}
