@@ -157,6 +157,32 @@
 (defn simple-otp-request-cached []
   test-data/otp-response-1)
 
+
+;; TODO: very important, sanitize the arguments passed.
+(defn otp-request-live [params]
+  (let [pass-arg (fn [arg] (if (get params arg)
+                             (str arg "=" (get params arg))
+                             ""))
+
+        otp-url 
+        (str "http://anaheim-otp.ed-groth.com/otp/routers/default/plan"
+             "?"
+             (reduce str [(pass-arg "fromPlace")
+                          "&" (pass-arg "toPlace")
+                          "&" (pass-arg "time")
+                          "&" (pass-arg "date")
+                          "&mode=TRANSIT,WALK"
+                          "&maxWalkDistance=750"
+                          "&walkReluctance=40"
+                          "&walkSpeed=0.3"
+                          "&arriveBy=false"
+                          "&showIntermediateStops=false"
+                          ]))]
+    ; {:body {:plan otp-url}} ))
+    (http-client/get otp-url {:as :json})))
+
+
+
 (defn simple-otp-request-live []
   (let [test-otp-url 
         (str "http://anaheim-otp.ed-groth.com/otp/routers/default/plan"
@@ -244,6 +270,26 @@
                    itinernary->add-route-span
                    )))
 
+(defresource ws-otp-with-args [get-params]
+  :available-media-types ["application/json" "text/plain"]
+  :handle-ok (pretty-json 
+               (-> (otp-request-live get-params)
+               ;; (-> (simple-otp-request-live)
+                   otp-response->itinerary
+                   itinernary->add-text2go
+                   itinernary->add-route-url
+                   itinernary->add-route-span
+                   )))
+
+(defresource ws-otp-cooked []
+  :available-media-types ["application/json" "text/plain"]
+  :handle-ok (pretty-json 
+               (-> (simple-otp-request-cached)
+                   otp-response->itinerary
+                   itinernary->add-text2go
+                   itinernary->add-route-url
+                   itinernary->add-route-span
+                   )))
 (defresource ws-otp-pass-through [otp-instance route-params params request]
   :last-modified  #inst "2015-04-09"
   :available-media-types ["application/json" "text/plain"]
@@ -267,8 +313,8 @@
   ;; (ANY "/otp-params/:otp-instance" {params :params}
   (context "/trip-planner/:otp-instance" [otp-instance]
     ;; (ANY "/pass-through" {route-params :route-params params :params}
-     (ANY "/plan" []
-       (ws-otp-example))
+     (ANY "/plan" request
+       (ws-otp-with-args (:params request)))
      (ANY "/plan-cooked" []
        (ws-otp-cooked))
      (ANY "/pass-through" request
