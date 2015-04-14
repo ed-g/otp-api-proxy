@@ -10,7 +10,8 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
   ;; graphical namespace viewer.
-  :profiles {:dev {:dependencies [[clj-ns-browser "1.3.1"]]}}
+  :profiles {:dev {:dependencies [[clj-ns-browser "1.3.1"]
+                                  ]}}
 
   :dependencies [ 
                  [cheshire "5.4.0"] ;; fast JSON

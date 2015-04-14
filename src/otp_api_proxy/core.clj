@@ -327,6 +327,8 @@
   (ANY "/hello-world/:echo" [echo]
        (ws-echo echo)))
 
+(defn f[x] (* x (+ x 1)))
+
 (def handler
   (add-header (-> app
                 wrap-params)
