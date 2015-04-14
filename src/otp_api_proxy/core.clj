@@ -281,15 +281,6 @@
                    itinernary->add-route-span
                    )))
 
-(defresource ws-otp-cooked []
-  :available-media-types ["application/json" "text/plain"]
-  :handle-ok (pretty-json 
-               (-> (simple-otp-request-cached)
-                   otp-response->itinerary
-                   itinernary->add-text2go
-                   itinernary->add-route-url
-                   itinernary->add-route-span
-                   )))
 (defresource ws-otp-pass-through [otp-instance route-params params request]
   :last-modified  #inst "2015-04-09"
   :available-media-types ["application/json" "text/plain"]
@@ -304,7 +295,7 @@
   :last-modified  #inst "2015-04-09"
   :available-media-types ["application/json" "text/plain"]
   ;; :handle-ok (pretty-json (simple-otp-request)))
-  :handle-ok (let [params (merge params)] (pretty-json { :otp-instance (str (type params)) :params params} )))
+  :handle-ok (pretty-json { :otp-instance (str (type params)) :params params} ))
 
 
 (defroutes app
