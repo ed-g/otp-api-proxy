@@ -255,6 +255,8 @@
             minduration (reduce min durations)]
         (-> fst
             (dissoc :duration)
+            (dissoc :startTime)
+            (dissoc :endTime)
             (assoc :minDuration minduration)
             (assoc :maxDuration maxduration)
             (assoc :countWithThisRouteSequence num-itins))))))
@@ -423,7 +425,7 @@
   (context "/trip-planner/:otp-instance" [otp-instance]
      (ANY "/plan" request
        (ws-otp-with-args (:params request)))
-     (ANY "/plan-merge-by-route-sequence" request
+     (ANY "/plan-then-merge-by-route-sequence" request
        (ws-otp-merge-by-route-sequence (:params request)))
      (ANY "/plan-cooked" []
        (ws-otp-cooked))
