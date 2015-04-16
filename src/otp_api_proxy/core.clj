@@ -418,12 +418,80 @@
   ;; :handle-ok (pretty-json (simple-otp-request)))
   :handle-ok (pretty-json { :otp-instance (str (type params)) :params params} ))
 
+(defresource ws-decode-polyline-function []
+  :last-modified  #inst "2015-04-09"
+  :available-media-types ["application/javascript" "text/plain"]
+  :handle-ok "
+  // decodePolyLine from otp-leaflet-client/src/main/webapp/js/otp/util/Geo.js
+  /* This program is free software: you can redistribute it and/or
+     modify it under the terms of the GNU Lesser General Public License
+     as published by the Free Software Foundation, either version 3 of
+     the License, or (at your option) any later version.
+     
+     This program is distributed in the hope that it will be useful,
+     but WITHOUT ANY WARRANTY; without even the implied warranty of
+     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     GNU General Public License for more details.
+     
+     You should have received a copy of the GNU General Public License
+     along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+   */
+	decodePolyline : function(polyline) {
+		
+		  var currentPosition = 0;
+
+		  var currentLat = 0;
+		  var currentLng = 0;
+	
+		  var dataLength  = polyline.length;
+		  
+		  var polylineLatLngs = new Array();
+		  
+		  while (currentPosition < dataLength) {
+			  
+			  var shift = 0;
+			  var result = 0;
+			  
+			  var byte;
+			  
+			  do {
+				  byte = polyline.charCodeAt(currentPosition++) - 63;
+				  result |= (byte & 0x1f) << shift;
+				  shift += 5;
+			  } while (byte >= 0x20);
+			  
+			  var deltaLat = ((result & 1) ? ~(result >> 1) : (result >> 1));
+			  currentLat += deltaLat;
+	
+			  shift = 0;
+			  result = 0;
+			
+			  do {
+				  byte = polyline.charCodeAt(currentPosition++) - 63;
+				  result |= (byte & 0x1f) << shift;
+				  shift += 5;
+			  } while (byte >= 0x20);
+			  
+			  var deltLng = ((result & 1) ? ~(result >> 1) : (result >> 1));
+			  
+			  currentLng += deltLng;
+	
+			  polylineLatLngs.push(new L.LatLng(currentLat * 0.00001, currentLng * 0.00001));
+		  }	
+		  
+		  return polylineLatLngs;
+	}
+  ")
+
+
 
 (defroutes app
   (ANY "/" []
        (ws-help))
   ;; (ANY "/otp-params/:otp-instance" {params :params}
   (context "/trip-planner/:otp-instance" [otp-instance]
+     (ANY "/decode-polyline.js" []
+        (ws-decode-polyline-function))
      (ANY "/plan" request
        (ws-otp-with-args (:params request)))
      (ANY "/plan-then-merge-by-route-sequence" request
