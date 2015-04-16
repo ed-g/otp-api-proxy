@@ -377,7 +377,7 @@
                    plan->add-route-span
                    )))
 
-(defresource ws-otp-simplify [get-params]
+(defresource ws-otp-merge-by-route-sequence [get-params]
   :available-media-types ["application/json" "text/plain"]
   :handle-ok (pretty-json 
                (-> (otp-request-live get-params)
@@ -423,8 +423,8 @@
   (context "/trip-planner/:otp-instance" [otp-instance]
      (ANY "/plan" request
        (ws-otp-with-args (:params request)))
-     (ANY "/plan-simplify" request
-       (ws-otp-simplify (:params request)))
+     (ANY "/plan-merge-by-route-sequence" request
+       (ws-otp-merge-by-route-sequence (:params request)))
      (ANY "/plan-cooked" []
        (ws-otp-cooked))
      (ANY "/pass-through" request
