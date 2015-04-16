@@ -436,7 +436,7 @@
      You should have received a copy of the GNU General Public License
      along with this program.  If not, see <http://www.gnu.org/licenses/>. 
    */
-	decodePolyline : function(polyline) {
+	var decodePolyline = function(polyline) {
 		
 		  var currentPosition = 0;
 
