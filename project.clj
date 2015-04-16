@@ -5,6 +5,8 @@
   :repl-options {:init-ns otp-api-proxy.core}
   :plugins [[lein-ancient "0.6.6"] 
             [lein-ring "0.9.3"]
+            [lein-kibit "0.0.8"]
+            [jonase/eastwood "0.2.1"] ;; clojure lint tool.
             [cider/cider-nrepl "0.8.2"]] ;; for lein repl.
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
