@@ -312,7 +312,6 @@
        (ws-help))
   ;; (ANY "/otp-params/:otp-instance" {params :params}
   (context "/trip-planner/:otp-instance" [otp-instance]
-    ;; (ANY "/pass-through" {route-params :route-params params :params}
      (ANY "/plan" request
        (ws-otp-with-args (:params request)))
      (ANY "/plan-cooked" []
