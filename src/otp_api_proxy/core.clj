@@ -11,6 +11,7 @@
             [clj-http.client :as http-client]
             [otp-api-proxy.test-data :as test-data]
             [clojure.walk :as walk]
+            [clojure.java.javadoc]
             ))
 
 (defonce hack-hack-hack
@@ -45,7 +46,7 @@
                             ]}
                ))
 
-(defn otp-response->itinerary [r]
+(defn otp-response->plan [r]
   (get-in r [:body :plan]))
 
 
@@ -55,11 +56,14 @@
       (dissoc :trace-redirects)))
 
 
-(comment "http://archive.oregon-gtfs.com/gtfs-api/route-span/day-in-la/2015-4-13/by-feed/anaheim-ca-us/route-id/1704")
+(comment 
+  "http://archive.oregon-gtfs.com/gtfs-api/route-span/day-in-la/2015-4-13/by-feed/anaheim-ca-us/route-id/1704")
 
-(comment "http://gtfs-api.ed-groth.com/gtfs-api/stops/by-feed/anaheim-ca-us")
+(comment 
+  "http://gtfs-api.ed-groth.com/gtfs-api/stops/by-feed/anaheim-ca-us")
 
-(comment "http://gtfs-api.ed-groth.com/gtfs-api/routes/by-feed/anaheim-ca-us")
+(comment 
+  "http://gtfs-api.ed-groth.com/gtfs-api/routes/by-feed/anaheim-ca-us")
 
 
 (defn gtfs-api-stops-request []
@@ -183,6 +187,24 @@
 
 
 
+(defn simple-otp-request-live-2 []
+  (let [test-otp-url 
+        (str "http://anaheim-otp.ed-groth.com/otp/routers/default/plan"
+             "?"
+             (reduce str (interpose "&" 
+                                    [ "fromPlace=33.8046480634388,-117.915358543396"
+                                      "toPlace=33.82422318995612,-117.90390014648436"
+                                      "time=1:29pm&date=03-31-2015"
+                                      "mode=TRANSIT,WALK"
+                                      "maxWalkDistance=750"
+                                      "walkReluctance=40"
+                                      "walkSpeed=0.3"
+                                      "arriveBy=false"
+                                      "showIntermediateStops=false"
+                                      ;;"_=1428612154915"
+                                      ])))]
+    (http-client/get test-otp-url {:as :json})))
+
 (defn simple-otp-request-live []
   (let [test-otp-url 
         (str "http://anaheim-otp.ed-groth.com/otp/routers/default/plan"
@@ -202,10 +224,93 @@
     (http-client/get test-otp-url {:as :json})))
 
 
+(when false ;; for debugging
+  (defn demo-itineraries
+    []
+    (-> test-data/otp-response-2
+        otp-response->remove-trace
+        otp-response->plan
+        plan->merge-similar
+        :itineraries))
+
+  ;; reduce example 
+  (reduce (fn [acc i] 
+            (update-in acc 
+                       [(even? i)] 
+                       #((fnil conj []) % i))) 
+          {} 
+          [1 2 3 4])
+  ;(map :walkDistance (demo-plan->merge-similar))
+  ;(map count-legs (demo-plan->merge-similar))
+  ;(map transit-routes (demo-itineraries))
+
+  (for [a [[1] [2 3 4] [5 6 7 8 9]]] (let [b (count a)] b))
+
+  (defn count-legs 
+    [itin]
+    (let [legs (:legs itin)]
+      {:count-legs (count legs)}))
+
+
+  (defn transit-routes
+    "transit routes for each leg of itinerary itin, in order.
+    non-transit legs are ignored."
+    [itin]
+    (let [legs (:legs itin)
+          legs-with-routeid (remove #(nil? (:routeId %))
+                                    legs)]
+      (into [] (map :routeId legs-with-routeid))))
+
+  (map (juxt :duration :minDuration :maxDuration :countWithThisRouteSequence)
+       (summarize-collection (collect-by-route-sequence (demo-itineraries)))))
+
+
+(defn collect-by-route-sequence [itins]
+  (reduce (fn [acc itin]
+            (update-in acc 
+                       [(transit-routes itin)]
+                       (fn [itins] 
+                         ((fnil conj [])
+                          itins itin))))
+          ;; itins ((juxt :duration :endTime) itin)))))
+          {}
+          itins))
+
+
+(defn summarize-collection [itin-collection]
+  (let [itin-lol (vals itin-collection)]
+    (for [itins itin-lol]
+      (let [fst (first itins)
+            durations (map :duration itins)
+            num-itins  (count itins)
+            maxduration (reduce max durations)
+            minduration (reduce min durations)]
+        (-> fst
+            (dissoc :duration)
+            (assoc :minDuration minduration)
+            (assoc :maxDuration maxduration)
+            (assoc :countWithThisRouteSequence num-itins))))))
+
+
+
+(defn plan->merge-similar
+  "merge itineraries which use the same bus routes in the same order, since our
+  ridership does not operate on an exact schedule."
+  [plan]
+  (let [itins (:itineraries plan)
+        itins-merged (summarize-collection (collect-by-route-sequence itins))
+        itins-sorted (sort 
+                       (fn [a b]
+                         (- (:walkDistance a) (:walkDistance b)))
+                       itins)]
+    (assoc plan :itineraries itins-merged)))
+
+ (comment see java.util.Comparator docs ) 
+
 ;; Fixme: verify agency-id along with stop code
-(defn itinernary->add-text2go
+(defn plan->add-text2go
   "add text2go codes into the stopCode field of an OTP Itinerary"
-  [itin]
+  [plan]
   (let [walk-add-code (fn [x]
                         (if (:stopId x)
                           (assoc x
@@ -213,11 +318,11 @@
                                  (anaheim-stop-text2go
                                    (get-in x [:stopId :id])))
                           x))]
-    (clojure.walk/postwalk walk-add-code itin)))
+    (clojure.walk/postwalk walk-add-code plan)))
 
-(defn itinernary->add-route-url 
+(defn plan->add-route-url 
   "add routeUrl (schedule information) for each route in otp itinerary."
-  [itin]
+  [plan]
   (let [walk-add-url (fn [x]
                        (if (:routeId x)
                          (assoc x
@@ -225,7 +330,7 @@
                                 (anaheim-route-url
                                   (get x :routeId)))
                          x))]
-    (clojure.walk/postwalk walk-add-url itin)))
+    (clojure.walk/postwalk walk-add-url plan)))
 
 
 (defn service-date->day-in-la 
@@ -234,7 +339,7 @@
   (clojure.string/replace service-date #"^(....)(..)(..)$" "$1-$2-$3"))
 
   
-(defn itinernary->add-route-span
+(defn plan->add-route-span
   "add routeSpan (service span) for each route in otp itinerary"
   [itin]
   (let [walk-add-span (fn [x]
@@ -257,17 +362,28 @@
   :available-media-types ["application/json" "text/plain"]
   :handle-ok (pretty-json 
                (-> (simple-otp-request-cached)
-                   otp-response->itinerary)))
+                   otp-response->plan)))
 
 (defresource ws-otp-cooked []
   :available-media-types ["application/json" "text/plain"]
   :handle-ok (pretty-json 
                (-> (simple-otp-request-cached)
                ;; (-> (simple-otp-request-live)
+                   otp-response->plan
+                   plan->add-text2go
+                   plan->add-route-url
+                   plan->add-route-span
+                   )))
+
+(defresource ws-otp-simplify [get-params]
+  :available-media-types ["application/json" "text/plain"]
+  :handle-ok (pretty-json 
+               (-> (otp-request-live get-params)
                    otp-response->itinerary
-                   itinernary->add-text2go
-                   itinernary->add-route-url
-                   itinernary->add-route-span
+                   plan->merge-similar
+                   plan->add-text2go
+                   plan->add-route-url
+                   plan->add-route-span
                    )))
 
 (defresource ws-otp-with-args [get-params]
@@ -276,9 +392,9 @@
                (-> (otp-request-live get-params)
                ;; (-> (simple-otp-request-live)
                    otp-response->itinerary
-                   itinernary->add-text2go
-                   itinernary->add-route-url
-                   itinernary->add-route-span
+                   plan->add-text2go
+                   plan->add-route-url
+                   plan->add-route-span
                    )))
 
 (defresource ws-otp-pass-through [otp-instance route-params params request]
@@ -306,6 +422,8 @@
     ;; (ANY "/pass-through" {route-params :route-params params :params}
      (ANY "/plan" request
        (ws-otp-with-args (:params request)))
+     (ANY "/plan-simplify" request
+       (ws-otp-simplify (:params request)))
      (ANY "/plan-cooked" []
        (ws-otp-cooked))
      (ANY "/pass-through" request
