@@ -272,8 +272,8 @@
         itins-sorted (sort 
                        (fn [a b]
                          (- (:walkDistance a) (:walkDistance b)))
-                       itins)]
-    (assoc plan :itineraries itins-merged)))
+                       itins-merged)]
+    (assoc plan :itineraries itins-sorted)))
 
  (comment see java.util.Comparator docs ) 
 
