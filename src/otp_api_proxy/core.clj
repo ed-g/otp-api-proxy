@@ -254,9 +254,10 @@
             maxduration (reduce max durations)
             minduration (reduce min durations)]
         (-> fst
-            (dissoc :duration)
-            (dissoc :startTime)
-            (dissoc :endTime)
+            (dissoc :startTime :endTime :duration)
+            ;; TODO: summarize the min/max duration for each leg??
+            (assoc :legs (map #(dissoc % :startTime :endTime )
+                              (:legs fst)))
             (assoc :minDuration minduration)
             (assoc :maxDuration maxduration)
             (assoc :countWithThisRouteSequence num-itins))))))
