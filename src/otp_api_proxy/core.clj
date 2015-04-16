@@ -224,51 +224,19 @@
     (http-client/get test-otp-url {:as :json})))
 
 
-(when false ;; for debugging
-  (defn demo-itineraries
-    []
-    (-> test-data/otp-response-2
-        otp-response->remove-trace
-        otp-response->plan
-        plan->merge-similar
-        :itineraries))
-
-  ;; reduce example 
-  (reduce (fn [acc i] 
-            (update-in acc 
-                       [(even? i)] 
-                       #((fnil conj []) % i))) 
-          {} 
-          [1 2 3 4])
-  ;(map :walkDistance (demo-plan->merge-similar))
-  ;(map count-legs (demo-plan->merge-similar))
-  ;(map transit-routes (demo-itineraries))
-
-  (for [a [[1] [2 3 4] [5 6 7 8 9]]] (let [b (count a)] b))
-
-  (defn count-legs 
-    [itin]
-    (let [legs (:legs itin)]
-      {:count-legs (count legs)}))
-
-
-  (defn transit-routes
-    "transit routes for each leg of itinerary itin, in order.
-    non-transit legs are ignored."
-    [itin]
-    (let [legs (:legs itin)
-          legs-with-routeid (remove #(nil? (:routeId %))
+(defn transit-route-sequence
+  "transit routes for each leg of itinerary itin, in order.
+  non-transit legs are ignored."
+  [itin]
+  (let [legs (:legs itin)
+        legs-with-routeid (remove #(nil? (:routeId %))
                                     legs)]
-      (into [] (map :routeId legs-with-routeid))))
-
-  (map (juxt :duration :minDuration :maxDuration :countWithThisRouteSequence)
-       (summarize-collection (collect-by-route-sequence (demo-itineraries)))))
-
+    (into [] (map :routeId legs-with-routeid))))
 
 (defn collect-by-route-sequence [itins]
   (reduce (fn [acc itin]
             (update-in acc 
-                       [(transit-routes itin)]
+                       [(transit-route-sequence itin)]
                        (fn [itins] 
                          ((fnil conj [])
                           itins itin))))
@@ -306,6 +274,40 @@
     (assoc plan :itineraries itins-merged)))
 
  (comment see java.util.Comparator docs ) 
+
+(when false ;; for debugging
+  (defn demo-itineraries
+    []
+    (-> test-data/otp-response-2
+        otp-response->remove-trace
+        otp-response->plan
+        plan->merge-similar
+        :itineraries))
+
+  ;; reduce example 
+  (reduce (fn [acc i] 
+            (update-in acc 
+                       [(even? i)] 
+                       #((fnil conj []) % i))) 
+          {} 
+          [1 2 3 4])
+  ;(map :walkDistance (demo-plan->merge-similar))
+  ;(map count-legs (demo-plan->merge-similar))
+  ;(map transit-routes (demo-itineraries))
+
+  (for [a [[1] [2 3 4] [5 6 7 8 9]]] (let [b (count a)] b))
+
+  (defn count-legs 
+    [itin]
+    (let [legs (:legs itin)]
+      {:count-legs (count legs)}))
+
+
+
+  (map (juxt :duration :minDuration :maxDuration :countWithThisRouteSequence)
+       (summarize-collection (collect-by-route-sequence (demo-itineraries)))))
+
+
 
 ;; Fixme: verify agency-id along with stop code
 (defn plan->add-text2go
@@ -379,7 +381,7 @@
   :available-media-types ["application/json" "text/plain"]
   :handle-ok (pretty-json 
                (-> (otp-request-live get-params)
-                   otp-response->itinerary
+                   otp-response->plan
                    plan->merge-similar
                    plan->add-text2go
                    plan->add-route-url
@@ -391,7 +393,7 @@
   :handle-ok (pretty-json 
                (-> (otp-request-live get-params)
                ;; (-> (simple-otp-request-live)
-                   otp-response->itinerary
+                   otp-response->plan
                    plan->add-text2go
                    plan->add-route-url
                    plan->add-route-span
