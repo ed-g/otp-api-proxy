@@ -23,7 +23,9 @@
                  :services [ 
                              { :name "Echo service" 
                                :url "/hello-world/echo" } 
-                             { :name "OTP Server Proxy Test" 
+                             { :name "OTP Server Proxy, Merging results by Route-sequence" 
+                               :url "/trip-planner/anaheim-ca-us/plan" } 
+                             { :name "OTP Server Proxy" 
                                :url "/trip-planner/anaheim-ca-us/plan" } 
                               { :name "OTP Server Proxy Test" 
                                :url "/trip-planner/anaheim-ca-us/pass-through" } 
