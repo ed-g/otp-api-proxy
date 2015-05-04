@@ -286,6 +286,8 @@
   (let [walk-add-url (fn [x]
                        (if (:routeShortName x)
                          (assoc x
+                                :foo
+                                (anaheim-route-lines)
                                 :routeHumanFrequency
                                 (anaheim-frequency-for-route-short-name
                                   (get x :routeShortName)))
