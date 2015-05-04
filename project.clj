@@ -28,6 +28,5 @@
                  [org.clojure/data.json "0.2.6"]
                  [org.clojure/tools.nrepl "0.2.10"]
                  [ring/ring-core "1.3.2"]
-
                  [clj-http "1.1.0"] ; for client to OpenTripPlanner
                  ])
