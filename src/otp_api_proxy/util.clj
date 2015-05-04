@@ -41,11 +41,13 @@
   (let [lines (split (route-lines-request) #"\n")]
     (for [l lines]
       (let [fields (split l #"\\")]
-        {:route_short_name (nth fields 0)
-         :frequency        (nth fields 5)}))))
+        {:route_short_names (into #{} 
+                                  (split (nth fields 3) #","))
+         :frequency         (nth fields 5)}))))
 
 (defn anaheim-frequency-for-route-short-name [n]
-  (-> (filter (comp #{n} :route_short_name) (anaheim-route-lines))
+  (-> (filter (comp #(get % n) :route_short_names) 
+              (anaheim-route-lines))
       first
       :frequency))
 
