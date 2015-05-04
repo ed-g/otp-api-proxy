@@ -38,12 +38,12 @@
   (let [lines (split (route-lines-request) #"\n")]
     (for [l lines]
       (let [fields (split l #"\\")]
-        {:route_id (nth fields 0)
-         :frequency (nth fields 5)}
+        {:route_short_name (nth fields 0)
+         :frequency        (nth fields 5)}
         ))))
 
-(defn anaheim-frequency-for-route-id [id]
-  (-> (filter (comp #{id} :route_id) (anaheim-route-lines))
+(defn anaheim-frequency-for-route-short-name [n]
+  (-> (filter (comp #{n} :route_short_name) (anaheim-route-lines))
       first
       :frequency))
 
@@ -285,11 +285,11 @@
   "Add route frequency for each route in otp itinerary."
   [plan]
   (let [walk-add-url (fn [x]
-                       (if (:routeId x)
+                       (if (:routeShortName x)
                          (assoc x
                                 :routeHumanFrequency
-                                (anaheim-frequency-for-route-id
-                                  (get x :routeId)))
+                                (anaheim-frequency-for-route-short-name
+                                  (get x :routeShortName)))
                          x))]
     (clojure.walk/postwalk walk-add-url plan)))
 
