@@ -43,7 +43,7 @@
         ))))
 
 (defn anaheim-frequency-for-route-id [id]
-  (-> (filter (comp #{id} :route_id) (route-lines))
+  (-> (filter (comp #{id} :route_id) (anaheim-route-lines))
       first
       :frequency))
 
