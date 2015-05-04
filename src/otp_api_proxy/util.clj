@@ -35,6 +35,9 @@
                  (http-client/get route-lines-url))))))
 
 (defn anaheim-route-lines []
+  ;; Note that results include the SSV header. I've kept it in there to make
+  ;; debugging easier.  It won't create a problem unless some bus route is
+  ;; named "route line id" for instance.
   (let [lines (split (route-lines-request) #"\n")]
     (for [l lines]
       (let [fields (split l #"\\")]
