@@ -64,6 +64,7 @@
                    otp-response->plan
                    plan->merge-similar
                    plan->add-text2go
+                   plan->add-frequency
                    plan->add-route-url
                    plan->add-route-span)))
 

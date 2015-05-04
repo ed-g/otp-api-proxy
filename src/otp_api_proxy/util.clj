@@ -5,6 +5,7 @@
             [liberator.core :refer [resource defresource]]
             [ring.middleware.params :refer [wrap-params]]
             [compojure.core :refer [defroutes context ANY]]
+            [clojure.string :refer [split]]
             [clojure.data.json :as json]
             [cheshire.core :as cheshire]
             [cheshire.generate :as cheshire-generate]
@@ -24,6 +25,28 @@
   (-> r
       (dissoc :orig-content-encoding)
       (dissoc :trace-redirects)))
+
+(def route-lines-request
+  "retrieve route_lines file which contains human-readable route frequency information"
+  (memoize (fn []
+             (let [route-lines-url 
+                   (str "http://rideart.org/wp-content/transit-data/route_lines.ssv")]
+               (:body
+                 (http-client/get route-lines-url))))))
+
+(defn anaheim-route-lines []
+  (let [lines (split (route-lines-request) #"\n")]
+    (for [l lines]
+      (let [fields (split l #"\\")]
+        {:route_id (nth fields 0)
+         :frequency (nth fields 5)}
+        ))))
+
+(defn anaheim-frequency-for-route-id [id]
+  (-> (filter (comp #{id} :route_id) (route-lines))
+      first
+      :frequency))
+
 
 (defn gtfs-api-stops-request []
   (let [test-api-url 
@@ -247,13 +270,25 @@
     (assoc plan :itineraries itins-sorted)))
 
 (defn plan->add-route-url 
-  "add routeUrl (schedule information) for each route in otp itinerary."
+  "Add routeUrl (schedule information) for each route in otp itinerary."
   [plan]
   (let [walk-add-url (fn [x]
                        (if (:routeId x)
                          (assoc x
                                 :routeUrl
                                 (anaheim-route-url
+                                  (get x :routeId)))
+                         x))]
+    (clojure.walk/postwalk walk-add-url plan)))
+
+(defn plan->add-frequency
+  "Add route frequency for each route in otp itinerary."
+  [plan]
+  (let [walk-add-url (fn [x]
+                       (if (:routeId x)
+                         (assoc x
+                                :routeHumanFrequency
+                                (anaheim-frequency-for-route-id
                                   (get x :routeId)))
                          x))]
     (clojure.walk/postwalk walk-add-url plan)))
