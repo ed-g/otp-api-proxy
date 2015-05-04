@@ -283,17 +283,15 @@
 (defn plan->add-frequency
   "Add route frequency for each route in otp itinerary."
   [plan]
-  (let [walk-add-url (fn [x]
-                       (if (:routeShortName x)
-                         (assoc x
-                                :foo
-                                (anaheim-route-lines)
-                                :routeHumanFrequency
-                                (anaheim-frequency-for-route-short-name
-                                  (get x :routeShortName)))
-                         x))]
-    (clojure.walk/postwalk walk-add-url plan)))
-
+  (let [walk-add-frequency 
+       (fn [x]
+         (if (:routeShortName x)
+           (assoc x
+                  :routeHumanFrequency (anaheim-frequency-for-route-short-name
+                                         (get x :routeShortName)))
+           x))]
+    (clojure.walk/postwalk walk-add-frequency plan)))
+    
 
 (defn service-date->day-in-la 
   "convert service date of the form YYYYMMDD to YYYY-MM-DD"

@@ -64,8 +64,8 @@
                    otp-response->plan
                    plan->merge-similar
                    plan->add-text2go
-                   plan->add-frequency
                    plan->add-route-url
+                   plan->add-frequency
                    plan->add-route-span)))
 
 (defresource otp-with-args [get-params]
@@ -75,6 +75,7 @@
                    otp-response->plan
                    plan->add-text2go
                    plan->add-route-url
+                   plan->add-frequency
                    plan->add-route-span)))
 
 (defresource otp-pass-through [otp-instance route-params params request]
