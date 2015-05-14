@@ -152,13 +152,16 @@
         otp-url 
         (str "http://anaheim-otp.ed-groth.com/otp/routers/default/plan"
              "?"
+             ;; banned routes format is: agency_id '__' route_id
+             ;; agency_id 248 is Anaheim, route id 1711 is route 20
              (reduce str [(pass-arg "fromPlace")
                           "&" (pass-arg "toPlace")
                           "&" (pass-arg "time")
                           "&" (pass-arg "date")
                           "&mode=TRANSIT,WALK"
-                          "&maxWalkDistance=750"
-                          "&walkReluctance=40"
+                          "&bannedRoutes=248__1711" 
+                          "&maxWalkDistance=1000"
+                          "&walkReluctance=2"
                           "&walkSpeed=0.3"
                           "&arriveBy=false"
                           "&showIntermediateStops=false"
