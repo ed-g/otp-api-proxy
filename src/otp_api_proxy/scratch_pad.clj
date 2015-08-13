@@ -22,10 +22,10 @@
   "http://archive.oregon-gtfs.com/gtfs-api/route-span/day-in-la/2015-4-13/by-feed/anaheim-ca-us/route-id/1704")
 
 (comment 
-  "http://gtfs-api.ed-groth.com/gtfs-api/stops/by-feed/anaheim-ca-us")
+  "http://gtfs-api.groth-geodata.com/gtfs-api/stops/by-feed/anaheim-ca-us")
 
 (comment 
-  "http://gtfs-api.ed-groth.com/gtfs-api/routes/by-feed/anaheim-ca-us")
+  "http://gtfs-api.groth-geodata.com/gtfs-api/routes/by-feed/anaheim-ca-us")
 
 
 (when false ;; for debugging
@@ -63,7 +63,7 @@
 
 (defn scratch-pad []
   ;; 
-  (let [test-otp-url "http://anaheim-otp.ed-groth.com/otp/routers/default/plan?fromPlace=33.8046480634388,-117.915358543396&toPlace=33.77272636987434,-117.8671646118164&time=1:29pm&date=03-31-2015&mode=TRANSIT,WALK&maxWalkDistance=750&walkReluctance=40&walkSpeed=0.3&arriveBy=false&showIntermediateStops=false&_=1428612154915"]
+  (let [test-otp-url "http://anaheim-otp.groth-geodata.com/otp/routers/default/plan?fromPlace=33.8046480634388,-117.915358543396&toPlace=33.77272636987434,-117.8671646118164&time=1:29pm&date=03-31-2015&mode=TRANSIT,WALK&maxWalkDistance=750&walkReluctance=40&walkSpeed=0.3&arriveBy=false&showIntermediateStops=false&_=1428612154915"]
     (http-client/get test-otp-url {:as :json}))
 
   (http-client/get "http://localhost:4000/" {:as :json})
@@ -72,4 +72,4 @@
 
 
 ;; good test URL.
-(comment "http://gtfs-api.ed-groth.com/trip-planner/anaheim-ca-us/plan-then-merge-by-route-sequence?fromPlace=33.8046480634388%2C-117.915358543396&toPlace=33.82422318995612%2C-117.90390014648436&time=1%3A29pm&date=03-31-2015")
+(comment "http://gtfs-api.groth-geodata.com/trip-planner/anaheim-ca-us/plan-then-merge-by-route-sequence?fromPlace=33.8046480634388%2C-117.915358543396&toPlace=33.82422318995612%2C-117.90390014648436&time=1%3A29pm&date=03-31-2015")
