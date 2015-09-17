@@ -2,7 +2,7 @@
   :description "OpenTripPlanner REST API proxy, which adds more useful information"
   :url "https://github.com/ed-g/otp-api-proxy"
   :ring {:handler otp-api-proxy.core/handler
-         :port 4000}
+         :port 4001}
   :repl-options {:init-ns otp-api-proxy.core}
   :plugins [[lein-ancient "0.6.6"] 
             [lein-ring "0.9.3"]

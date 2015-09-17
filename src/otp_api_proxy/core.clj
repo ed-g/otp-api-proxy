@@ -19,7 +19,7 @@
             ))
 
 (defonce hack-hack-hack-start-nrepl-server
-  (nrepl-server/start-server :port 4100 :bind "127.0.0.1"
+  (nrepl-server/start-server :port 4101 :bind "127.0.0.1"
                              :handler cider-nrepl-handler))
 
 (defn ignore-trailing-slash
