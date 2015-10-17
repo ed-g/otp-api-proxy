@@ -268,13 +268,25 @@
   ridership does not operate on an exact schedule."
   [plan]
   ;; see java.util.Comparator docs 
-  (let [itins (:itineraries plan)
+  (let [itins (or (:itineraries (:itineraries plan)) ; see comment below.
+                  (:itineraries plan))
         itins-merged (summarize-collection (collect-by-route-sequence itins))
         itins-sorted (sort
                        (fn [a b]
                          (- (:walkDistance a) (:walkDistance b)))
                        itins-merged)]
-    (assoc plan :itineraries itins-sorted)))
+    ;; Format changed in 0.18 so that two itineraries tags are nested:
+    ;; <itineraries><itineraries> ... </itineraries></itineraries>
+    ;;
+    ;; This is likely a bug, but we can work around it.
+    ;;
+    ;; Hence we look for itineraries lists in both locations, and then
+    ;; insert our results into both locations so as to be compatible with
+    ;; either version of the javascript client.
+    ;;
+    ;; Ed 2015-10-17
+    (assoc    plan :itineraries itins-sorted)
+    (assoc-in plan [:itineraries :itineraries] itins-sorted)))
 
 (defn plan->add-route-url 
   "Add routeUrl (schedule information) for each route in otp itinerary."
