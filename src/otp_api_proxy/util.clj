@@ -150,7 +150,8 @@
                              (str arg "=" (get params arg))
                              ""))
         otp-url 
-        (str "http://anaheim-otp.groth-geodata.com/otp/routers/default/plan"
+        ; (str "http://anaheim-otp.groth-geodata.com/otp/routers/default/plan"
+        (str "http://anaheim-otp.groth-geodata.com/otp-0.18/routers/default/plan"
              "?"
              ;; banned routes format is: agency_id '__' route_id
              ;; agency_id 248 is Anaheim, route id 1711 is route 20
