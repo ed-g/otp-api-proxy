@@ -269,20 +269,19 @@
   ridership does not operate on an exact schedule."
   [plan]
   ;; see java.util.Comparator docs 
-  (let [itins (or (:itineraries (:itineraries plan)) ; see comment below.
-                  (:itineraries plan))
+  (let [itins (:itineraries plan)
         itins-merged (summarize-collection (collect-by-route-sequence itins))
         itins-sorted (sort
                        (fn [a b]
                          (- (:walkDistance a) (:walkDistance b)))
                        itins-merged)]
-    ;; Format changed in 0.18 so that two itineraries tags are nested:
-    ;; <itineraries><itineraries> ... </itineraries></itineraries>
+    ;; Format changed in 0.18 so that the itinerary tag nested beneath
+    ;; itineraries is also called itineraries.
+    ;; <itineraries><itineraries> ... </itineraries>
+    ;;              <itineraries> ... </itineraries>
+    ;; </itineraries>
     ;;
     ;; This is likely a bug, but we can work around it.
-    ;;
-    ;; Hence we look for itineraries lists in both locations, however we 
-    ;; insert our results into <itineraries> only. 
     ;;
     ;; Ed 2015-10-17
     (assoc  plan  :itineraries itins-sorted)))
