@@ -285,8 +285,9 @@
     ;; either version of the javascript client.
     ;;
     ;; Ed 2015-10-17
-    (assoc    plan :itineraries itins-sorted)
-    (assoc-in plan [:itineraries :itineraries] itins-sorted)))
+    (-> plan
+        (assoc    :itineraries itins-sorted)
+        (assoc-in [:itineraries :itineraries] itins-sorted))))
 
 (defn plan->add-route-url 
   "Add routeUrl (schedule information) for each route in otp itinerary."
