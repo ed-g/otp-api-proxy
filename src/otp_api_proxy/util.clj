@@ -18,6 +18,7 @@
   (cheshire/encode value {:pretty true}))
 
 (defn otp-response->plan [r]
+  ;(def *debug-r r) ;; for debugging, save response data
   (get-in r [:body :plan]))
 
 

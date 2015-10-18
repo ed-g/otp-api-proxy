@@ -1,0 +1,171 @@
+
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<response>
+    <requestParameters>
+        <entry>
+            <key>date</key>
+            <value>03-31-2015</value>
+        </entry>
+        <entry>
+            <key>mode</key>
+            <value>TRANSIT,WALK</value>
+        </entry>
+        <entry>
+            <key>walkReluctance</key>
+            <value>2</value>
+        </entry>
+        <entry>
+            <key>walkSpeed</key>
+            <value>0.3</value>
+        </entry>
+        <entry>
+            <key>arriveBy</key>
+            <value>false</value>
+        </entry>
+        <entry>
+            <key>showIntermediateStops</key>
+            <value>false</value>
+        </entry>
+        <entry>
+            <key>fromPlace</key>
+            <value>33.801296,-117.9422</value>
+        </entry>
+        <entry>
+            <key>toPlace</key>
+            <value>33.803067,-117.92752</value>
+        </entry>
+        <entry>
+            <key>time</key>
+            <value>1:29pm</value>
+        </entry>
+        <entry>
+            <key>maxWalkDistance</key>
+            <value>1000</value>
+        </entry>
+        <entry>
+            <key>bannedRoutes</key>
+            <value>248__1711</value>
+        </entry>
+    </requestParameters>
+    <debug>
+        <precalculationTime>0</precalculationTime>
+        <pathCalculationTime>236</pathCalculationTime>
+        <pathTimes>22</pathTimes>
+        <renderingTime>1</renderingTime>
+        <totalTime>237</totalTime>
+        <timedOut>false</timedOut>
+    </debug>
+    <plan>
+        <date>2015-03-31T20:29:00Z</date>
+        <from>
+            <name>service road</name>
+            <lon>-117.9422</lon>
+            <lat>33.801296</lat>
+            <geometry>{"type": "Point", "coordinates": [-117.9422,33.801296]}</geometry>
+        </from>
+        <to>
+            <name>service road</name>
+            <lon>-117.92743909209364</lon>
+            <lat>33.80306707857349</lat>
+            <geometry>{"type": "Point", "coordinates": [-117.92743909209364,33.80306707857349]}</geometry>
+        </to>
+        <itineraries>
+            <itinerary>
+                <duration>5324.0</duration>
+                <startTime>2015-03-31T13:29:00-07:00</startTime>
+                <endTime>2015-03-31T14:57:44-07:00</endTime>
+                <walkTime>5324</walkTime>
+                <transitTime>0</transitTime>
+                <waitingTime>0</waitingTime>
+                <walkDistance>1573.8205319291703</walkDistance>
+                <walkLimitExceeded>true</walkLimitExceeded>
+                <elevationLost>0.0</elevationLost>
+                <elevationGained>0.0</elevationGained>
+                <transfers>0</transfers>
+                <legs>
+                    <leg mode="WALK" route="" agencyTimeZoneOffset="-25200000" interlineWithPreviousLeg="false" rentedBike="false">
+                        <startTime>2015-03-31T13:29:00-07:00</startTime>
+                        <endTime>2015-03-31T14:57:44-07:00</endTime>
+                        <departureDelay>0</departureDelay>
+                        <arrivalDelay>0</arrivalDelay>
+                        <realTime>false</realTime>
+                        <distance>1573.1855319544034</distance>
+                        <from orig="">
+                            <name>service road</name>
+                            <lon>-117.9422</lon>
+                            <lat>33.801296</lat>
+                            <departure>2015-03-31T13:29:00-07:00</departure>
+                            <geometry>{"type": "Point", "coordinates": [-117.9422,33.801296]}</geometry>
+                        </from>
+                        <to orig="">
+                            <name>service road</name>
+                            <lon>-117.92743909209364</lon>
+                            <lat>33.80306707857349</lat>
+                            <arrival>2015-03-31T14:57:44-07:00</arrival>
+                            <geometry>{"type": "Point", "coordinates": [-117.92743909209364,33.80306707857349]}</geometry>
+                        </to>
+                        <legGeometry>
+                            <length>32</length>
+                            <points>iyhmE|qznUS?]?]?_@?]?W?Y?[?O??sCW?s@@Q?SQ?kBAeB?yBAaD?aD?aDAkCA{IAkBEeIEqSA}DAg@@[Au@?sA\?</points>
+                        </legGeometry>
+                        <steps>
+                            <walkSteps>
+                                <distance>199.76989390376968</distance>
+                                <relativeDirection>DEPART</relativeDirection>
+                                <streetName>service road</streetName>
+                                <absoluteDirection>NORTH</absoluteDirection>
+                                <stayOn>false</stayOn>
+                                <area>false</area>
+                                <bogusName>true</bogusName>
+                                <lon>-117.94222020000001</lon>
+                                <lat>33.8013324</lat>
+                                <elevation/>
+                            </walkSteps>
+                            <walkSteps>
+                                <distance>66.28255082963327</distance>
+                                <relativeDirection>LEFT</relativeDirection>
+                                <streetName>Euclid Street</streetName>
+                                <absoluteDirection>NORTH</absoluteDirection>
+                                <stayOn>false</stayOn>
+                                <area>false</area>
+                                <bogusName>false</bogusName>
+                                <lon>-117.94148670000001</lon>
+                                <lat>33.8025119</lat>
+                                <elevation/>
+                            </walkSteps>
+                            <walkSteps>
+                                <distance>1290.6960575186868</distance>
+                                <relativeDirection>RIGHT</relativeDirection>
+                                <streetName>West Katella Avenue</streetName>
+                                <absoluteDirection>EAST</absoluteDirection>
+                                <stayOn>false</stayOn>
+                                <area>false</area>
+                                <bogusName>false</bogusName>
+                                <lon>-117.94140700000001</lon>
+                                <lat>33.803085200000005</lat>
+                                <elevation/>
+                            </walkSteps>
+                            <walkSteps>
+                                <distance>16.43702970231359</distance>
+                                <relativeDirection>RIGHT</relativeDirection>
+                                <streetName>service road</streetName>
+                                <absoluteDirection>SOUTH</absoluteDirection>
+                                <stayOn>false</stayOn>
+                                <area>false</area>
+                                <bogusName>false</bogusName>
+                                <lon>-117.9274393</lon>
+                                <lat>33.8032149</lat>
+                                <elevation/>
+                            </walkSteps>
+                        </steps>
+                        <duration>5324.0</duration>
+                    </leg>
+                </legs>
+                <tooSloped>false</tooSloped>
+            </itinerary>
+        </itineraries>
+    </plan>
+</response>
+
+
