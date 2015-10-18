@@ -280,14 +280,11 @@
     ;;
     ;; This is likely a bug, but we can work around it.
     ;;
-    ;; Hence we look for itineraries lists in both locations, and then
-    ;; insert our results into both locations so as to be compatible with
-    ;; either version of the javascript client.
+    ;; Hence we look for itineraries lists in both locations, however we 
+    ;; insert our results into <itineraries> only. 
     ;;
     ;; Ed 2015-10-17
-    (-> plan
-        (assoc    :itineraries itins-sorted)
-        (assoc-in [:itineraries :itineraries] itins-sorted))))
+    (assoc  plan  :itineraries itins-sorted)))
 
 (defn plan->add-route-url 
   "Add routeUrl (schedule information) for each route in otp itinerary."
