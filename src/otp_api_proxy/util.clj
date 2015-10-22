@@ -252,6 +252,7 @@
 
 
 ;; Fixme: verify agency-id along with stop code
+;; Ed 2015-10-21. Looks like newer versions of OTP include the stopCode for us.
 (defn plan->add-text2go
   "add text2go codes into the stopCode field of an OTP Itinerary"
   [plan]

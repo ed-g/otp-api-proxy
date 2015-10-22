@@ -53,7 +53,6 @@
                (-> (simple-otp-request-cached)
                ;; (-> (simple-otp-request-live)
                    otp-response->plan
-                   plan->add-text2go
                    plan->add-route-url
                    plan->add-route-span)))
 
@@ -63,7 +62,6 @@
                (-> (otp-request-live get-params)
                    otp-response->plan
                    plan->merge-similar
-                   plan->add-text2go
                    plan->add-route-url
                    plan->add-frequency
                    plan->add-route-span)))
@@ -73,7 +71,6 @@
   :handle-ok (pretty-json 
                (-> (otp-request-live get-params)
                    otp-response->plan
-                   plan->add-text2go
                    plan->add-route-url
                    plan->add-frequency
                    plan->add-route-span)))
