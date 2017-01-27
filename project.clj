@@ -17,6 +17,7 @@
                                   ]}}
 
   :dependencies [ 
+                 [org.clojure/clojure "1.8.0"] 
                  [cheshire "5.4.0"] ;; fast JSON
                  [cider/cider-nrepl "0.8.2"] ; for builtin repl.
                  [clj-time "0.9.0"] ;; joda time wrapper
