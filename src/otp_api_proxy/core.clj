@@ -8,20 +8,27 @@
             [ring.middleware.params :refer [wrap-params]]
             [compojure.core :refer [defroutes context ANY]]
             [clojure.data.json :as json]
+            [environ.core :refer [env]] ;; environment variables
             [cheshire.core :as cheshire]
             [cheshire.generate :as cheshire-generate]
             [clj-http.client :as http-client]
             [clojure.walk :as walk]
             [clojure.java.javadoc]
-            [environ.core :refer [env]] ;; environment variables
             [otp-api-proxy.test-data :as test-data]
             [otp-api-proxy.web-service :as ws]
             ))
 
+(defn parse-int [s]
+ (try (Integer. s)
+   (catch Exception e nil)))
+
+
 (defonce hack-hack-hack-start-nrepl-server
-  (when-not (env :otp-api-proxy-skip-repl)
-    (nrepl-server/start-server :port 4101 :bind "127.0.0.1"
-                             :handler cider-nrepl-handler)))
+  (when (env :otp-api-proxy-nrepl-port)
+    (nrepl-server/start-server 
+      :port (parse-int (env :otp-api-proxy-nrepl-port)) 
+      :bind "127.0.0.1"
+      :handler cider-nrepl-handler)))
 
 (defn ignore-trailing-slash
   "Modifies the request uri before calling the handler.  Removes a single
