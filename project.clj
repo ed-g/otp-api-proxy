@@ -23,6 +23,7 @@
                  [compojure "1.3.3"]
                  [liberator "0.12.2"] ;; simple REST, similar to webmachine
                  [net.drib/mrhyde "0.5.3"] ;; clojure <-> js interop library
+                 [environ "1.1.0"];; for environment variables
                  [org.clojure/clojure "1.6.0"]
                  [org.clojure/core.async "0.1.346.0-17112a-alpha"] 
                  [org.clojure/data.json "0.2.6"]
