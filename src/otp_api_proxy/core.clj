@@ -13,14 +13,15 @@
             [clj-http.client :as http-client]
             [clojure.walk :as walk]
             [clojure.java.javadoc]
-
+            [environ.core :refer [env]] ;; environment variables
             [otp-api-proxy.test-data :as test-data]
             [otp-api-proxy.web-service :as ws]
             ))
 
 (defonce hack-hack-hack-start-nrepl-server
-  (nrepl-server/start-server :port 4101 :bind "127.0.0.1"
-                             :handler cider-nrepl-handler))
+  (when-not (env :otp-api-proxy-skip-repl)
+    (nrepl-server/start-server :port 4101 :bind "127.0.0.1"
+                             :handler cider-nrepl-handler)))
 
 (defn ignore-trailing-slash
   "Modifies the request uri before calling the handler.  Removes a single
