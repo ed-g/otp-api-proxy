@@ -153,6 +153,7 @@
         otp-url 
         ; (str "http://anaheim-otp.groth-geodata.com/otp/routers/default/plan"
         (str "http://anaheim-otp.groth-geodata.com/otp-0.18/routers/default/plan"
+        ;;(str "http://anaheim-otp.groth-geodata.com/anaheim-1.0/otp/routers/default/plan"
              "?"
              ;; banned routes format is: agency_id '__' route_id
              ;; agency_id 248 is Anaheim, route id 1711 is route 20
@@ -162,7 +163,9 @@
                           "&" (pass-arg "date")
                           "&mode=TRANSIT,WALK"
                           "&bannedRoutes=248__1711" 
-                          "&maxWalkDistance=1000"
+                          ;;"&maxWalkDistance=1000"
+                          ;; commented out maxWalkDistance per 
+                          ;; https://basecamp.com/2316867/projects/5165963/messages/68643001#comment_538262837 
                           "&walkReluctance=2"
                           "&walkSpeed=0.3"
                           "&arriveBy=false"
