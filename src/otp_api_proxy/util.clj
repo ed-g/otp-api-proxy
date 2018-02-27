@@ -55,7 +55,7 @@
 
 (defn gtfs-api-stops-request []
   (let [test-api-url 
-        (str "http://gtfs-api.groth-geodata.com/gtfs-api/"
+        (str "http://gtfs-api.trilliumtransit.com/gtfs-api/"
              (reduce str (interpose "/" 
                                     [ "stops"
                                       "by-feed/anaheim-ca-us"
@@ -69,7 +69,7 @@
 
 (defn gtfs-api-routes-request []
   (let [test-api-url 
-        (str "http://gtfs-api.groth-geodata.com/gtfs-api/"
+        (str "http://gtfs-api.trilliumtransit.com/gtfs-api/"
              (reduce str (interpose "/" 
                                     [ "routes"
                                       "by-feed/anaheim-ca-us"
@@ -88,12 +88,12 @@
   { :early (remove-debug-info (:early route-span)) 
     :late  (remove-debug-info (:late  route-span)) }))
 
-;; "http://gtfs-api.groth-geodata.com/gtfs-api/route-span/day-in-la/2015-4-13/by-feed/anaheim-ca-us/route-id/1700"
+;; "http://gtfs-api.trilliumtransit.com/gtfs-api/route-span/day-in-la/2015-4-13/by-feed/anaheim-ca-us/route-id/1700"
 (defn gtfs-api-routes-span-request
   "route-id should be a text gtfs route_id. day-in-la is formatted YYYY-MM-DD."
   [route-id day-in-la]
   (let [test-api-url 
-        (str "http://gtfs-api.groth-geodata.com/gtfs-api/route-span/"
+        (str "http://gtfs-api.trilliumtransit.com/gtfs-api/route-span/"
              (reduce str (interpose "/" 
                                     [ "day-in-la" day-in-la
                                       "by-feed/anaheim-ca-us"
@@ -151,9 +151,9 @@
                              (str arg "=" (get params arg))
                              ""))
         otp-url 
-        ; (str "http://anaheim-otp.groth-geodata.com/otp/routers/default/plan"
-        (str "http://anaheim-otp.groth-geodata.com/otp-0.18/routers/default/plan"
-        ;;(str "http://anaheim-otp.groth-geodata.com/anaheim-1.0/otp/routers/default/plan"
+        ; (str "http://anaheim-otp.trilliumtransit.com/otp/routers/default/plan"
+        (str "http://anaheim-otp-server.trilliumtransit.com/otp-0.18/routers/default/plan"
+        ;;(str "http://anaheim-otp.trilliumtransit.com/anaheim-1.0/otp/routers/default/plan"
              "?"
              ;; banned routes format is: agency_id '__' route_id
              ;; agency_id 248 is Anaheim, route id 1711 is route 20
@@ -179,7 +179,7 @@
 
 (defn simple-otp-request-live-2 []
   (let [test-otp-url 
-        (str "http://anaheim-otp.groth-geodata.com/otp/routers/default/plan"
+        (str "http://anaheim-otp.trilliumtransit.com/otp/routers/default/plan"
              "?"
              (reduce str (interpose "&" 
                                     [ "fromPlace=33.8046480634388,-117.915358543396"
@@ -198,7 +198,7 @@
 
 (defn simple-otp-request-live []
   (let [test-otp-url 
-        (str "http://anaheim-otp.groth-geodata.com/otp/routers/default/plan"
+        (str "http://anaheim-otp.trilliumtransit.com/otp/routers/default/plan"
              "?"
              (reduce str (interpose "&" 
                                     [ "fromPlace=33.8046480634388,-117.915358543396"
