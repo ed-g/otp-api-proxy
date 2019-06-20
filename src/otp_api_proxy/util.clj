@@ -179,7 +179,7 @@
 
 (defn simple-otp-request-live-2 []
   (let [test-otp-url 
-        (str "http://anaheim-otp.trilliumtransit.com/otp/routers/default/plan"
+        (str "http://anaheim-otp-server.trilliumtransit.com/otp/routers/default/plan"
              "?"
              (reduce str (interpose "&" 
                                     [ "fromPlace=33.8046480634388,-117.915358543396"
@@ -198,7 +198,7 @@
 
 (defn simple-otp-request-live []
   (let [test-otp-url 
-        (str "http://anaheim-otp.trilliumtransit.com/otp/routers/default/plan"
+        (str "http://anaheim-otp-server.trilliumtransit.com/otp/routers/default/plan"
              "?"
              (reduce str (interpose "&" 
                                     [ "fromPlace=33.8046480634388,-117.915358543396"
